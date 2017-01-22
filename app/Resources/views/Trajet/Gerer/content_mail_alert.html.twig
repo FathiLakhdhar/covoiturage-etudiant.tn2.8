@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>Alert-Mailer</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+          crossorigin="anonymous">
+
+</head>
+
+
+<body>
+<section class="container margin-top-100">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <img src="{{ asset('img/logofin.png') }}" style="max-height: 40px;"/>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <section class="col-md-12">
+            <h3>Bonjour </h3>
+            <p>
+                Alert ...
+            </p>
+        </section>
+    </div>
+
+
+    <section class="row">
+        <div class="col-md-12">
+
+            <table class="table table-bordered table-striped table-condensed">
+                <caption>
+                    <h4>Détails du Trajet</h4>
+                </caption>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>Origine</td>
+                    <td>
+                        {{ trajet.origine.lieu }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Destination</td>
+                    <td>
+                        {{ trajet.destination.lieu }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Aller</td>
+                    <td>
+                        {{ trajet.datesAllerToArray|join(', ') }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Retour</td>
+                    <td>
+                        {{ trajet.datesRetourToArray|join(', ') }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Places</td>
+                    <td>
+                        {{ trajet.nbPlaces }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Prix</td>
+                    <td>
+                        {{ trajet.totalPrix }}
+                    </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+
+        <div class="col-md-12 text-center">
+            <a href="{{ url('trajet_show', {'id': trajet.id}) }}" class="btn btn-green">Voir Trajet</a>
+        </div>
+
+    </section>
+
+
+</section>
+
+</body>
+
+</html>

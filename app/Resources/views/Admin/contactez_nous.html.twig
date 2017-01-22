@@ -1,0 +1,140 @@
+{% extends ':Admin:layout.html.twig' %}
+
+
+{% block admin_contenu %}
+    Contactez-nous
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="thumbnail">
+
+                <table id="table-data" class="table-data table table-bordered   table-striped table-hover">
+                    <thead>
+                    <tr class="success">
+                        <td>nom</td>
+                        <td>email</td>
+                        <td>message</td>
+                        <td>action</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for contact in contacts %}
+                        <tr>
+                            <td>{{ contact.nom }}</td>
+                            <td>{{ contact.email }}</td>
+                            <td>{{ contact.message }}</td>
+                            <td>
+                                <button class="btn btn-danger btn-remove" data-remove-url="{{ contact.email }}">
+                                    Supprimer
+                                </button><button class="btn btn-primary btn-repondre" data-email="{{ contact.email }}">
+                                    Répondre
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal_editor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <form method="post" action="{{ path('admin_api_repondre') }}" class="form_contact_repondre">
+
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-envelope"></i> Quick Email</h4>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div id="model_load" class="text-center" style="display: none; position: relative">
+                            <img id="img-loader" class="loading" src="{{ asset('img/Preloader.gif') }}" alt="Loading"/>
+                        </div>
+
+
+                        <div class="form-group">
+                            <input id="Objet" name="objet" type="text" class="form-control" placeholder="Objet...">
+                        </div>
+                        <div class="form-group">
+                            <input id="email" name="email" type="email" class="form-control" placeholder="email...">
+                        </div>
+                        <div class="form-group">
+                            <textarea name="editor1" id="editor1" rows="10" cols="80"></textarea>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <p class="error-form red"></p>
+
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" >Répondre
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+{% endblock admin_contenu %}
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
+    <script>
+
+
+
+        function AjaxRepondre(){
+            $('body').on('submit','.form_contact_repondre',function(e){
+                e.preventDefault();
+                $('#model_load').show();
+                $.ajax({
+                            type: $(this).attr('method'),
+                            url: $(this).attr('action'),
+                            data: $(this).serialize()
+                        })
+                        .done(function (data) {
+                            console.log(data.error.message);
+                            $('#model_load').hide();
+                            $('#modal_editor').modal('hide')
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            console.log('error :' + jqXHR.responseJSON.error.message);
+                            $('#model_load').hide();
+                            $('.error-form').html(jqXHR.responseJSON.error.message);
+                        });
+            });
+        }
+
+
+        $(document).ready(function () {
+
+
+            AjaxRepondre();
+
+            $('.btn-repondre').click(function(){
+                $('input#email').val($(this).data('email'));
+                $('#modal_editor').modal('show')
+            });
+            CKEDITOR.replace('editor1');
+        });
+    </script>
+{% endblock javascripts %}
+

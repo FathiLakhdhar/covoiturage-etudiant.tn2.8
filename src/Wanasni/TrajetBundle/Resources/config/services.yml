@@ -1,0 +1,14 @@
+parameters:
+#    wanasni_trajet.proposerlistener.class: Wanasni\TrajetBundle\Listener\ProposerListener
+
+services:
+    wanasni_trajet.alert_mailer:
+        class: Wanasni\TrajetBundle\Services\AlertService
+        arguments: [@mailer, @doctrine.orm.entity_manager, @templating]
+
+
+    wanasni_recent_trajet_extention:
+        class: Wanasni\TrajetBundle\Services\RecentTrajetExtension
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            -    {name : twig.extension }

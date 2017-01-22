@@ -1,0 +1,7 @@
+parameters:
+#    wanasni_api.example.class: Wanasni\ApiBundle\Example
+
+services:
+#    wanasni_api.example:
+#        class: %wanasni_api.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

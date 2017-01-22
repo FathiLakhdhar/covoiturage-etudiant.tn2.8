@@ -1,0 +1,77 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{# ================= #}
+<div class="row">
+
+    <div class="col-sm-6 col-sm-offset-3">
+
+        <div class="form-box">
+            <div class="form-top">
+                <div class="form-top-left">
+                    <h3>S'inscrire</h3>
+                    <p>Remplissez le formulaire ci-dessous pour obtenir un accès instantané :</p>
+                </div>
+                <div class="form-top-right">
+                    <i class="fa fa-pencil"></i>
+                </div>
+            </div>
+            <div class="form-bottom">
+
+                {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+
+
+                <div class="form-group">
+                    {{ form_errors(form.firstname) }}
+                    {{ form_label(form.firstname, 'First name', {'label_attr': {'class': 'sr-only'}}) }}
+                    {{ form_widget(form.firstname, {'attr': {'class': 'form-first-name form-control', 'placeholder':'Prenom...'} } ) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_errors(form.lastname) }}
+                    {{ form_label(form.lastname, 'Last name', {'label_attr': {'class': 'sr-only'}}) }}
+                    {{ form_widget(form.lastname, {'attr': {'class': 'form-last-name form-control', 'placeholder':'Nom...'} } ) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_errors(form.username) }}
+                    {{ form_label(form.username, 'Username', {'label_attr': {'class': 'sr-only'}}) }}
+                    {{ form_widget(form.username, {'attr': {'class': 'form-username form-control', 'placeholder':'Nom d\'utilisateur...'} } ) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_errors(form.email) }}
+                    {{ form_label(form.email, 'Email', {'label_attr': {'class': 'sr-only'}}) }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-email form-control', 'placeholder':'Email...'} } ) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_errors(form.minibio) }}
+                    {{ form_label(form.minibio, 'About yourself', {'label_attr': {'class': 'sr-only'}}) }}
+                    {{ form_widget(form.minibio, {'attr': {'class': 'form-minibio form-control', 'placeholder':'À propos de vous...'} } ) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_errors(form.plainPassword.first) }}
+                    {{ form_label(form.plainPassword.first,'Mot de passe', {'label_attr': {'class': 'sr-only'}}) }}
+                    {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-plainPassword-first form-control', 'placeholder':'Mot de passe...'} } ) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_errors(form.plainPassword.second) }}
+                    {{ form_label(form.plainPassword.second,'Vérification ', {'label_attr': {'class': 'sr-only'}}) }}
+                    {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-plainPassword-second form-control', 'placeholder':'Vérification...'} } ) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.gender,'Sexe ', {'label_attr': {'class': 'sr-only'}}) }}
+                    {{ form_widget(form.gender, {'attr': {'class': 'form-gender form-control'} } ) }}
+                </div>
+
+                <button type="submit" class="btn blue-btn btn-block btn-lg">{{ 'registration.submit'|trans }}</button>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+    </div>
+</div>

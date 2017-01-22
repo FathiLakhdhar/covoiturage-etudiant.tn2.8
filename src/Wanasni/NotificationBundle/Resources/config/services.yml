@@ -1,0 +1,15 @@
+parameters:
+#    wanasni_notification.example.class: Wanasni\NotificationBundle\Example
+
+services:
+    wanasni_notification.create:
+        class: Wanasni\NotificationBundle\Services\NotificationService
+        arguments: [@mailer, @doctrine.orm.entity_manager, @templating]
+
+
+    wanasni_notification.nbUnread:
+        class: Wanasni\NotificationBundle\Services\NotificationExtension
+        arguments: [@doctrine.orm.entity_manager, @security.context]
+        tags:
+            -    {name : twig.extension }
+

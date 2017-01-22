@@ -1,0 +1,111 @@
+{% extends ':Trajet:layout.html.twig' %}
+
+{% block title %}
+    mes reservations
+{% endblock title %}
+
+
+{% block  body %}
+    <div class="container margin-top-100">
+        {{ include(':Trajet/Gerer:nav_pills_trajet.html.twig') }}
+
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div class="alert alert-{{ label }}">
+                    {{ flash }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <div class="tab-content thumbnail">
+            <div id="Covoiturages" class="tab-pane fade in active">
+                <div class="page-header">
+                    <h2 class="violet-red">Covoiturages</h2>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="{{ path('mes-trajets') }}">Mes Trajets</a></li>
+                            <li  class="active"><a>Mes reservations</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-8">
+
+                        <div class="tab-content thumbnail">
+
+                            <div id="mes_trajets" class="tab-pane fade in active">
+                                <div class="page-header">
+                                    <h2 class="violet-red">Trajet reserve moi</h2>
+                                </div>
+
+
+                                {% for trajet in trajets %}
+
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">
+                                                {{ trajet.origine.lieu }}
+                                                {% if trajet.roundTrip %}
+                                                    <i class="ion ion-arrow-swap"></i>
+                                                {% else %}
+                                                    <i class="ion ion-arrow-right-c"></i>
+                                                {% endif %}
+                                                {{ trajet.destination.lieu }}
+                                            </h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <p>
+                                                        Publier : {{ trajet.proposerAt|date("Y-m-d", false) }}
+                                                    </p>
+                                                    <p>
+                                                        {{ trajet.nbPlacesRestants }} place(s) disponible(s).
+                                                    </p>
+                                                    <p>
+                                                        {{ trajet.totalPrix }} TND par passager
+                                                    </p>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <a href="{{ path('trajet_show',{'id':trajet.id}) }}"
+                                                       class="btn btn-green"><strong><i class="ion ion-edit"></i> + détails</strong></a>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+
+                                {% else %}
+                                    <div class="alert alert-info">
+                                        <p>Pour le moment, il n'y a pas de trajet déposé à cette date.
+                                            Vous pouvez déposer un trajet ou créer une alerte dès maintenant.</p>
+                                    </div>
+
+                                {% endfor %}
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+{% endblock  body %}
+

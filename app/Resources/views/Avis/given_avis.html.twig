@@ -1,0 +1,82 @@
+{% extends ':Avis:layout.html.twig' %}
+
+
+
+{% block avis_contenu %}
+
+    <div class="row">
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div class="alert alert-{{ label }}">
+                    {{ flash }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+    </div>
+
+
+
+    <div class="row">
+
+        <div class="col-md-4"><!-- navPils menu -->
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="{{ path('avis_laisser') }}">Laisser un avis</a></li>
+                <li><a href="{{ path('avis_received') }}">Avis reçus</a></li>
+                <li class="active"><a href="{{ path('avis_given') }}">Avis laissés</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-8">
+
+            <h3 class="page-header violet-red">
+                Avis laissés
+            </h3>
+
+
+            <div>
+
+
+                <table class="table-data table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <td>Nom d'utilisateur</td>
+                            <td>était</td>
+                            <td>évaluation</td>
+                            <td>comment</td>
+                            <td>creatAt</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for avis in AvisGiven %}
+                        <tr>
+                            <td>{{ avis.recepteur.username }}</td>
+                            <td>{{ avis.role }}</td>
+                            <td>{{ avis.global }}</td>
+                            <td>{{ avis.comment }}</td>
+                            <td>{{ avis.createAt|date('m/d/Y') }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <strong>Pas d'avis laissés</strong>
+                        </tr>
+                    {% endfor %}
+
+
+
+                    </tbody>
+                </table>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+
+{% endblock avis_contenu %}

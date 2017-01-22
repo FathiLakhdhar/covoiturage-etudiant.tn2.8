@@ -1,0 +1,49 @@
+{% extends ':Admin:layout.html.twig' %}
+
+{% block title %}
+    Admin-ListUtilisateurs
+{% endblock title %}
+
+
+        {% block admin_contenu %}
+
+
+            <table class="table-data table table-bordered   table-striped table-hover">
+                <thead>
+                <tr class="success">
+                    <td>Username</td>
+                    <td>Nom complete</td>
+                    <td>email</td>
+                    <td>action</td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.fullName }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+
+                            <a href="{{ path('admin_list_avis_received_user',{'id':user.id}) }}" class="btn btn-primary">
+                                Avis reçus ({{ user.avisReceived|length }})
+                            </a>
+                            {% if user.locked %}
+                                <a href="{{ path('admin_unlocked_user',{'id':user.id}) }}" class="btn btn-success" data-email="">
+                                    Déverrouillée
+                                </a>
+                            {% else %}
+                                <a href="{{ path('admin_locked_user',{'id':user.id}) }}" class="btn btn-danger" data-email="">
+                                    Bloque
+                                </a>
+                            {% endif %}
+
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+
+        {% endblock admin_contenu %}

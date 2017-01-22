@@ -1,0 +1,232 @@
+{% extends ':Avis:layout.html.twig' %}
+
+
+
+{% block avis_contenu %}
+
+    <div class="row">
+
+        <div class="col-md-4"><!-- navPils menu -->
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active"><a href="{{ path('avis_laisser') }}">Laisser un avis</a></li>
+                <li><a href="{{ path('avis_received') }}">Avis reçus</a></li>
+                <li><a href="{{ path('avis_given') }}">Avis laissés</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-8">
+
+            <h3 class="page-header violet-red">
+                Laisser un avis
+            </h3>
+
+
+
+            {{ form_start(form,{'attr':{'class':'well'},'action':path('avis_laisser')}) }}
+
+            <div class="form-group">
+                <p>
+                    Retrouvez un membre avec qui vous avez voyagé en indiquant son Nom d'utilisateur
+                </p>
+                {{ form_widget(form.recepteur,{'attr':{'class':'form-control js-data-contact-ajax ', 'data-contact-url':path('api_search_username')}}) }}
+                 {{ form_errors(form.recepteur) }}
+            </div>
+
+            <div class="form-group">
+                <p>
+                    <strong>était :</strong>
+                </p>
+
+                <label>
+                    {{ form_widget(form.role[0],{'attr':{'class':''}}) }}
+                    Passager
+                </label>
+                <label>
+                    {{ form_widget(form.role[1],{'attr':{'class':''}}) }}
+                    Conducteur
+                </label>
+                {{ form_errors(form.role) }}
+            </div>
+
+            <div class="form-group">
+
+                <p>
+                    <strong>Comment évaluez-vous votre expérience ?</strong>
+                </p>
+
+
+                <label>
+                    {{ form_widget(form.global[0],{'attr':{'class':'iCheck'}}) }}
+                    Parfait
+                </label>
+                <label>
+                    {{ form_widget(form.global[1],{'attr':{'class':'iCheck'}}) }}
+                    Très bien
+                </label>
+                <label>
+                    {{ form_widget(form.global[2],{'attr':{'class':'iCheck'}}) }}
+                    Bien
+                </label>
+                <label>
+                    {{ form_widget(form.global[3],{'attr':{'class':'iCheck'}}) }}
+                    Décevant
+                </label>
+                <label>
+                    {{ form_widget(form.global[4],{'attr':{'class':'iCheck'}}) }}
+                    À éviter
+                </label>
+
+                {{ form_errors(form.global) }}
+            </div>
+
+            <div class="form-group">
+                <p>
+                    <strong>Votre avis est important, partagez le avec la communauté :</strong>
+                </p>
+                {{ form_widget(form.comment,{'attr':{'class':'form-control'}}) }}
+            </div>
+
+
+            <div class="well well-sm conduite_optional" style="display: none">
+
+                <p>Votre évaluation permettra aux autres passagers de trouver un bon conducteur.</p>
+
+                <div class="form-group driving_optional">
+
+
+                    <label>
+                        {{ form_widget(form.driving.placeholder,{'attr':{'class':'iCheck'}}) }}
+                        {{ form_label(form.driving.placeholder) }}
+
+                    </label>
+
+
+                    <label>
+                        {{ form_widget(form.driving[0],{'attr':{'class':'iCheck'}}) }}
+                        Conduite agréable
+                    </label>
+                    <label>
+                        {{ form_widget(form.driving[1],{'attr':{'class':'iCheck'}}) }}
+                        Peut mieux faire
+                    </label>
+                    <label>
+                        {{ form_widget(form.driving[2],{'attr':{'class':'iCheck'}}) }}
+                        À éviter
+                    </label>
+
+
+                    {{ form_errors(form.driving) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary"> Laisser un avis </button>
+            </div>
+
+
+            {{ form_end(form) }}
+
+
+        </div>
+    </div>
+
+
+
+
+{% endblock avis_contenu %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        function formatRepo (repo) {
+            if (repo.loading) return repo.text;
+            console.log(repo);
+            var markup = "<div class='select2-result-repository clearfix'>" +
+                    "<div class='select2-result-repository__avatar'><img src='" + repo.icon + "' /></div>" +
+                    "<div class='select2-result-repository__meta'>" +
+                    "<div class='select2-result-repository__title'>" + repo.full_name + "</div>"+
+                    "";
+
+            if (repo.minibio) {
+                markup += "<div class='select2-result-repository__description'>" + repo.minibio + "</div>";
+            }
+
+
+            markup += "</div></div>";
+/*
+            <div class='select2-result-repository__statistics'>" +
+                    "<div class='select2-result-repository__forks'><i class='fa fa-flash'></i> " + repo.forks_count + " Forks</div>" +
+                    "<div class='select2-result-repository__stargazers'><i class='fa fa-star'></i> " + repo.stargazers_count + " Stars</div>" +
+                    "<div class='select2-result-repository__watchers'><i class='fa fa-eye'></i> " + repo.watchers_count + " Watchers</div>" +
+                    "</div>" +
+                    "</div></div>";
+*/
+            return markup;
+        }
+
+        function formatRepoSelection (repo) {
+            return repo.username || repo.text;
+        }
+
+
+        function getUrlSearchContact(){
+            return $('.js-data-contact-ajax').data('contact-url');
+        }
+
+
+        $('.js-data-contact-ajax').select2({
+            placeholder: 'Select an option',
+            ajax: {
+                url: getUrlSearchContact(),
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+
+                    params.page = params.page || 1;
+
+                    return {
+                        results: data.items,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+            minimumInputLength: 1,
+            templateResult: formatRepo, // omitted for brevity, see the source of this page
+            templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+        });
+
+
+
+        $(document).ready(function(){
+
+
+            $('#wanasni_avisbundle_avis_role_1').on('change',function(){
+                if($(this).is(':checked')){
+                    $('#wanasni_avisbundle_avis_driving_placeholder').attr('disabled','disabled');
+                    $('.conduite_optional').show();
+                }
+            });
+
+            $('#wanasni_avisbundle_avis_role_0').on('change',function(){
+                if($(this).is(':checked')){
+                    $('.conduite_optional').hide();
+                }
+            });
+
+        });
+
+
+    </script>
+{% endblock javascripts %}

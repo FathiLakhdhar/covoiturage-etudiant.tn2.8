@@ -1,0 +1,29 @@
+
+<html>
+<head>
+    <title>Photo accepte</title>
+</head>
+<body>
+
+
+<div style="padding: 10px; background-color: #00c0ef;border-radius: 10px">
+    <h3 style="color: #FFFFFF">Bonjour {{ photo.user.username }}</h3>,
+
+    <p style="color: #FFFFFF">
+        Votre photo a été acceptée par notre équipe Relations Membres .
+    </p>
+</div>
+
+
+<p>
+    Votre photo a été accepte.
+</p>
+
+
+
+<a style="background-color: #f6a828;padding: 5px; color: #FFFFFF; font-size: 18px; text-decoration: none; border-radius: 3px; display: inline-block;" href="{{ url('photo_edit') }}">Modifier la photo</a>
+
+
+
+</body>
+</html>

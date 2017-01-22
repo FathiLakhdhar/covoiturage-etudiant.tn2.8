@@ -1,0 +1,128 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+
+{% block fos_user_content %}
+    <div class="container">
+        {{ include('@FOSUser/Profile/nav_pills_profile.html.twig') }}
+        <div class="tab-content thumbnail">
+            <!-- Tab pane Profile -->
+            <div id="Profil" class="tab-pane fade in active">
+                <div class="page-header">
+                    <h2 class="violet-red">Profil</h2>
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="{{ path('fos_user_profile_edit') }}">Informations personnelles</a>
+                            </li>
+                            <li><a href="{{ path('photo_edit') }}">Photo</a></li>
+                            <li class="active"><a href="{{ path('cars-show') }}">Véhicule</a></li>
+                            <li><a href="{{ path('fos_user_change_password') }}">Mot de passe</a></li>
+                            <li><a href="#">Fermeture de compte</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-8">
+
+                        <div class="tab-content thumbnail">
+                            <div id="vehicule" class="tab-pane fade in active">
+                                <div class="page-header">
+                                    <h2 class="violet-red">Véhicule</h2>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {% for label, flashes in app.session.flashbag.all %}
+                                            {% for flash in flashes %}
+                                                <div class="alert alert-{{ label }}">
+                                                    {{ flash }}
+                                                </div>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </div>
+
+
+                                    <div class="col-md-12">
+
+                                        {% for vehicule in vehicules %}
+
+                                            <div class="info-box">
+                                                <span class="info-box-icon bg-aqua">
+                                                    <i class="ion ion-model-s"
+                                                       style="color: {{ '#'~ vehicule.couleur.id }}"></i>
+                                                </span>
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text">{{ vehicule.fullNameCar }}</span>
+                                                    <span class="info-box-number">
+                                                        {{ vehicule.nbrPlaces }}
+                                                        <small> Places</small>
+                                                        {% if vehicule.confort == 'BASIC' %}
+                                                            <a data-toggle="tooltip" title="Basique">
+                                                                <i class="ion ion-star blue"></i>
+                                                            </a>
+                                                        {% elseif vehicule.confort == 'NORMAL' %}
+                                                            <a data-toggle="tooltip" title="Normal">
+                                                                <i class="ion ion-star blue"></i>
+                                                                <i class="ion ion-star blue"></i>
+                                                            </a>
+                                                        {% elseif vehicule.confort == 'COMFORT' %}
+                                                            <a data-toggle="tooltip" title="Confort">
+                                                                <i class="ion ion-star blue"></i>
+                                                                <i class="ion ion-star blue"></i>
+                                                                <i class="ion ion-star blue"></i>
+                                                            </a>
+                                                        {% else %}
+                                                            <a data-toggle="tooltip" title="Luxe">
+                                                                <i class="ion ion-star blue"></i>
+                                                                <i class="ion ion-star blue"></i>
+                                                                <i class="ion ion-star blue"></i>
+                                                            </a>
+                                                        {% endif %}
+
+
+                                                        <a href="{{ path('car_edit',{'id':vehicule.id}) }}" data-toggle="tooltip" title="Modifier">
+                                                            <i class="ion ion-edit green"></i>
+                                                        </a>
+                                                        <a href="{{ path('car_remove',{'id':vehicule.id}) }}" data-toggle="tooltip" title="Supprimer"
+                                                           onclick="return confirm('Etes vous sûre de vouloir supprimer cette Véhicule ?');">
+                                                            <i class="ion ion-close-round red"></i>
+                                                        </a>
+
+
+
+
+                                                    </span>
+                                                </div><!-- /.info-box-content -->
+                                            </div>
+
+
+                                        {% else %}
+                                            <div class="alert alert-info">
+                                                <p>Pour obtenir deux fois plus de visites, renseignez le type de votre
+                                                    véhicule.</p>
+                                            </div>
+                                        {% endfor %}
+
+                                        <a href="{{ path('car-add') }}" class="btn btn-primary">Ajouter Véhicule</a>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div><!-- end Tab pane Profile -->
+        </div>
+    </div>
+
+{% endblock fos_user_content %}

@@ -1,0 +1,42 @@
+
+<!-- Dialog choose day -->
+<div id="chooseDate" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h5 class="modal-title">Ajouter une date</h5>
+            </div>
+
+            <div class="modal-body">
+                <p>Voulez vous faire un trajet aller et/ou retour à cette date ?</p>
+                <form action="">
+
+                    <div class="form-group">
+                        <input id="simple-choice" type="checkbox" name="simple-choice" value="" class="choose-modal">
+                        <label for="simple-choice">
+                            <span class="simple-choice-label">Trajet aller</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <input id="round-choice" type="checkbox" name="round-choice" value="" class="choose-modal">
+                        <label for="round-choice">
+                            <span class="round-choice-label">Trajet retour</span>
+                        </label>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-validation" type="button" data-dismiss="modal">
+                    Ok
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

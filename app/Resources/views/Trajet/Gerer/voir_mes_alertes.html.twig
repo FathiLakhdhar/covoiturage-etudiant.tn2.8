@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}
+    Vos notifications
+{% endblock title %}
+
+
+
+{% block body %}
+
+
+
+    <div class="container margin-top-100">
+
+        <ul id="nav-pills-h-profil-e" class="nav nav-pills nav-justified">
+            <li class="triangle-down">
+                <a href="{{ path('mes-trajets') }}">
+                    <i class="fa fa-car"></i>
+                    <p>Covoiturages</p>
+                </a>
+            </li>
+            <li class="triangle-down">
+                <a href="{{ path('avis_laisser') }}">
+                    <i class="fa fa-star"></i>
+                    <p>Avis</p>
+                </a>
+            </li>
+            <li class="triangle-down active">
+                <a href="{{ path('mes-alertes') }}">
+                    <i class="fa fa-bullhorn"></i>
+                    <p>Alerts</p>
+                </a>
+            </li>
+            <li class="triangle-down">
+                <a href="{{ path('fos_message_inbox') }}">
+                    <i class="fa fa-envelope-o"></i>
+                    <p>Messages</p>
+                </a>
+            </li>
+            <li class="triangle-down">
+                <a href="{{ path('vos_notifications') }}">
+                    <i class="fa fa-bell-o"></i>
+                    <p>Notifications</p>
+                </a>
+            </li>
+            <li class="triangle-down">
+                <a href="{{ path('fos_user_profile_edit') }}">
+                    <i class="flaticon-man flat-2x"></i>
+                    <p>Profil</p>
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content thumbnail">
+            <!-- Tab pane Profile -->
+            <div id="alert" class="tab-pane fade in active">
+                <div class="page-header">
+                    <h2 class="violet-red">Alerte</h2>
+                </div>
+            </div>
+
+
+
+            <div class="alert alert-info no-icon u-clearfix">
+
+                <div class="overflow-hidden pos-relative">
+                    <i class="ion ion-information-circled"
+                       style="font-size: 88px;position: absolute;right: 0px;color: rgba(3, 79, 132, 0.2);">
+
+                    </i>
+                    <h3>Comment créer une alerte&nbsp;:</h3>
+                    <ol>
+                        <li><a href="{{ path('trajet_search') }}">Recherchez le trajet</a> qui vous intéresse</li>
+                        <li>Renseignez votre date de voyage et cliquez sur Créer une alerte</li>
+                    </ol>
+                </div>
+            </div>
+
+            {% for alert in alertes %}
+
+                <div class="well well-sm">
+                    <p>
+                        <span class="badge bg-green" style="font-size: 14px"><i class="ion ion-ios-location"></i> {{ alert.origine }}</span>
+                        <i class="ion ion-arrow-right-a"></i>
+                        <span class="badge bg-red" style="font-size: 14px"><i class="ion ion-ios-location"></i> {{ alert.destination }}</span>
+                        :
+                        <span class="badge" style="font-size: 14px"><i class="fa fa-calendar"></i> {{ alert.date|date("m/d/Y") }}</span>
+
+                    </p>
+                </div>
+
+            {% else %}
+                <div class="alert alert-warning">
+                    Vous n'avez pas encore créé d'alertes.
+                </div>
+            {% endfor %}
+
+
+
+
+        </div>
+
+
+
+    </div>
+{% endblock body %}

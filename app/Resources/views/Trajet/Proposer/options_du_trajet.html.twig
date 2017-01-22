@@ -1,0 +1,177 @@
+<h3 class="page-header">
+    Options du trajet
+</h3>
+<p>Choisissez les options disponibles en fonction de votre voiture et vos préférences</p>
+<div class="row">
+    <div class="bagages col-md-12">
+        <div class="row" id="bagage">
+            <div class="col-md-3">
+                {{ form_label(form.Bagages,'Bagages autorisés :',{'label_attr': {'class': 'darkviolet'}} ) }}
+            </div>
+
+            <div class="col-md-9"><!-- [] -->
+
+                <div class="option-trajet col-md-2">
+                    <label for="wanasni_trajetbundle_trajet_Bagages_0">
+                        {{ form_widget(form.Bagages[0],{'attr':{'class':'iCheck'}}) }}
+                        <a data-toggle="tooltip" href="javascript:void(0);"
+                           title="Petit bagage">
+                            <i class="flat flaticon-icon-72242 flat-2x darkviolet"></i>
+                        </a>
+                    </label>
+                </div>
+
+                <div class="option-trajet col-md-2">
+                    <label for="wanasni_trajetbundle_trajet_Bagages_1">
+                        {{ form_widget(form.Bagages[1],{'attr':{'class':'iCheck'}}) }}
+                        <a data-toggle="tooltip" href="javascript:void(0);"
+                           title="Bagage moyen">
+                            <i class="flat flaticon-travelling-654654 flat-2x darkviolet"></i>
+                        </a>
+                    </label>
+                </div>
+
+                <div class="option-trajet col-md-2">
+                    <label for="wanasni_trajetbundle_trajet_Bagages_2">
+                        {{ form_widget(form.Bagages[2],{'attr':{'class':'iCheck'}}) }}
+                        <a data-toggle="tooltip" href="javascript:void(0);"
+                           title="Grand bagage">
+                            <i class="flat flaticon-icon-81465 flat-2x darkviolet"></i>
+                        </a>
+                    </label>
+                </div>
+
+                <div class="option-trajet col-md-2">
+                    <label for="wanasni_trajetbundle_trajet_Bagages_3">
+                        {{ form_widget(form.Bagages[3],{'attr':{'class':'iCheck'}}) }}
+                        <a data-toggle="tooltip" href="javascript:void(0);"
+                           title="Aucun">
+                            <i class="flat flaticon-cross6546 flat-2x darkviolet"></i>
+                        </a>
+                    </label>
+                </div>
+
+                {{ form_errors(form.Bagages)}}
+
+            </div>
+
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="Preferences col-md-12" id="Preferences">
+        <div class="row">
+            <div class="col-md-3">
+                {{ form_label(form.Preferences,'Préférences :',{'label_attr': {'class': 'darkviolet'}}) }}
+            </div>
+            <div class="col-md-9">
+
+                <div class="row">
+                    <div class="option-trajet col-md-2">
+                        <label>
+                            {{ form_widget(form.Preferences.fumeurs) }}
+                            <a data-toggle="tooltip" href="javascript:void(0);"
+                               title="Fumeur">
+                                <i class="flat flaticon-cigar flat-2x darkviolet"></i>
+                            </a>
+                        </label>
+                    </div>
+
+
+                    <div class="option-trajet col-md-2">
+                        <label>
+                            {{ form_widget(form.Preferences.animaux) }}
+                            <a data-toggle="tooltip" href="javascript:void(0);"
+                               title="animaux">
+                                <i class="flat flaticon-icon-107409 flat-2x darkviolet"></i>
+                            </a>
+                        </label>
+                    </div>
+
+                    <div class="option-trajet col-md-2">
+                        <label>
+                            {{ form_widget(form.Preferences.animauxEnCage) }}
+                            <a data-toggle="tooltip" href="javascript:void(0);"
+                               title="animaux en cage">
+                                <i class="flat flaticon-icon-105685 flat-2x darkviolet"></i>
+                            </a>
+                        </label>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="option-trajet col-md-2">
+                        <label>
+                            {{ form_widget(form.Preferences.musique) }}
+                            <a data-toggle="tooltip" href="javascript:void(0);"
+                               title="musique">
+                                <i class="flat flaticon-music-l5156 flat-2x darkviolet"></i>
+                            </a>
+                        </label>
+                    </div>
+
+                    <div class="option-trajet col-md-2">
+                        <label>
+                            {{ form_widget(form.Preferences.detours) }}
+                            <a data-toggle="tooltip" href="javascript:void(0);"
+                               title="Détours">
+                                <i class="flat flaticon-detour flat-2x darkviolet"></i>
+                            </a>
+                        </label>
+                    </div>
+
+                    <div class="option-trajet col-md-2">
+                        <label>
+                            {{ form_widget(form.Preferences.pauseCafe) }}
+                            <a data-toggle="tooltip" href="javascript:void(0);"
+                               title="Pause cafe">
+                                <i class="flat flaticon-icon-112407 flat-2x darkviolet"></i>
+                            </a>
+                        </label>
+                    </div>
+
+                    <div class="option-trajet col-md-2">
+                        <label>
+                            {{ form_widget(form.Preferences.nourriture) }}
+                            <a data-toggle="tooltip" href="javascript:void(0);"
+                               title="Nourriture">
+                                <i class="flat flaticon-food-1545 flat-2x darkviolet"></i>
+                            </a>
+                        </label>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        {{ form_errors(form.Preferences)}}
+    </div>
+
+
+    <section class="Vehicule col-md-12">
+        <div class="row">
+            <div class="col-md-3">
+                {{ form_label(form.vehicule,'Véhicule :',{'label_attr': {'class': 'darkviolet'}}) }}
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_widget(form.vehicule) }}
+                        <a href="#" data-toggle="modal" data-target=".sc-car-modal-lg"><span class="badge bg-green">+ Ajoute véhicule</span></a>
+                        {{ form_errors(form.vehicule)}}
+                        <!-- Formaddcar exist in propser.html.twig -->
+                    </div>
+                    <div class="col-md-3">
+                        {{ form_widget(form.nbPlaces) }}
+                        {{ form_errors(form.nbPlaces)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</div>

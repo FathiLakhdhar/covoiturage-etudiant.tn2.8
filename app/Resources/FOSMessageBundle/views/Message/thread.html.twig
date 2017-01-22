@@ -1,0 +1,184 @@
+{% extends 'FOSMessageBundle::layout.html.twig' %}
+
+{% block fos_message_content %}
+    <div class="content-message">
+
+        <div class="box box-success direct-chat direct-chat-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    {% for participant in thread.participants %}
+                        {% if participant != app.user %}
+                            <strong class="">
+                                {{ participant.firstname~' '~participant.lastname }}
+                            </strong>
+                        {% endif %}
+                    {% endfor %}
+                </h3>
+
+                <div class="box-tools pull-right">
+                    <form action="{{ path('fos_message_thread_delete',{'threadId': thread.id}) }}" method="post">
+                        <span class="badge bg-green">{{ thread.messages|length }}</span>
+                        <button type="submit" class="btn btn-box-tool"><i class="fa fa-trash-o"></i></button>
+                    </form>
+                </div>
+
+            </div><!-- /.box-header -->
+            <div class="box-body" data-url-thread_messages_unread="{{ path('api_thread_messages_unread',{'threadId': thread.id}) }}">
+                <!-- Conversations are loaded here -->
+                <div class="direct-chat-messages" id="direct-chat-messages">
+                    {% for message in thread.messages %}
+                        <div class="messenger_thread_message">
+                            {% if message.sender == app.user %}
+                                <!-- Message to the right -->
+                                <div class="direct-chat-msg right">
+                                    <div class="direct-chat-info clearfix">
+                                        <span class="direct-chat-name pull-right">{{ message.sender|e }}</span>
+                                        <span class="direct-chat-timestamp pull-left">{{ message.createdAt|date("F jS \\a\\t g:ia") }}</span>
+                                    </div><!-- /.direct-chat-info -->
+                                    <img class="direct-chat-img" src="{{ asset(message.sender.photo.webPath) }}"
+                                         alt="{{ message.sender|e }}"><!-- /.direct-chat-img -->
+                                    <div class="direct-chat-text" id="message_{{ message.id }}">
+                                        <p>{{ message.body }}</p>
+                                    </div><!-- /.direct-chat-text -->
+                                </div><!-- /.direct-chat-msg -->
+                            {% else %}
+                                <!-- Message. Default to the left -->
+                                <div class="direct-chat-msg">
+                                    <div class="direct-chat-info clearfix">
+                                        <span class="direct-chat-name pull-left">{{ message.sender|e }}</span>
+                                        <span class="direct-chat-timestamp pull-right">{{ message.createdAt|date("F jS \\a\\t g:ia") }}</span>
+                                    </div><!-- /.direct-chat-info -->
+                                    <img class="direct-chat-img" src="{{ asset(message.sender.photo.webPath) }}"
+                                         alt="{{ message.sender|e }}"><!-- /.direct-chat-img -->
+                                    <div class="direct-chat-text" id="message_{{ message.id }}">
+                                        <p>
+                                            {{ message.body }}
+                                        </p>
+                                    </div><!-- /.direct-chat-text -->
+                                </div><!-- /.direct-chat-msg -->
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                </div><!--/.direct-chat-messages-->
+
+            </div><!-- /.box-body -->
+
+
+            <div class="box-footer">
+                {{ form_start(form, {'method': 'post', 'action': path('api_thread_msg',{'threadId': thread.id}), 'attr': {'class':'ajaxForm'}}) }}
+                <div class="form-group">
+                    {{ form_widget(form.body,{'attr':{'class':'form-control','placeholder':'Votre réponse...'}}) }}
+                    {{ form_errors(form.body) }}
+                    <div class="red error-form"></div>
+                </div>
+                <div></div>
+                <button type="submit" class="btn btn-success btn-flat">Envoyer</button>
+                {{ form_end(form) }}
+            </div><!-- /.box-footer-->
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+
+        (function ( $ ) {
+
+            $.fn.addMsgrightHtml = function($message){
+
+                $newmsg = $('<div class="direct-chat-msg right">' +
+                        '<div class="direct-chat-info clearfix">' +
+                        '<span class="direct-chat-name pull-right">{{ app.user.username }}</span>' +
+                        '<span class="direct-chat-timestamp pull-left">'+$message.createAt+'</span>' +
+                        '</div>' +
+                        '<img class="direct-chat-img" src="{{ asset(app.user.photo.webPath) }}"alt="{{ app.user.username }}">' +
+                        '<div class="direct-chat-text" id="message_'+$message.id+'">' +
+                        '<p>' +$message.body+'</p>'+
+                        '</div>' +
+                        '</div>' +
+                        '');
+
+                this.append($newmsg);
+
+            };
+
+            $.fn.addMsgleftHtml = function($messages){
+
+                var $elem=this;
+
+                $.each( $messages, function( key, message ) {
+                    console.log(message);
+                    $('#chatAudio')[0].play();
+                    $newmsg = $('<div class="direct-chat-msg">' +
+                            '<div class="direct-chat-info clearfix">' +
+                            '<span class="direct-chat-name pull-left">'+message.sender+'</span>' +
+                            '<span class="direct-chat-timestamp pull-right">'+message.createAt+'</span>' +
+                            '</div>' +
+                            '<img class="direct-chat-img" src="'+message.icon+'"alt="'+message.sender+'">' +
+                            '<div class="direct-chat-text" id="message_'+message.id+'">' +
+                            '<p>' +message.body+'</p>'+
+                            '</div>' +
+                            '</div>' +
+                            '');
+
+                    $elem.append($newmsg);
+                    $('.box-body').animate({"scrollTop": $('.box-body')[0].scrollHeight}, "slow");
+                });
+
+
+
+            };
+
+        }( jQuery ));
+
+
+
+        function initAjaxForm() {
+            $('body').on('submit', '.ajaxForm', function (e) {
+                        e.preventDefault();
+                        $.ajax({
+                                    type: $(this).attr('method'),
+                                    url: $(this).attr('action'),
+                                    data: $(this).serialize()
+                                })
+                                .done(function (data) {
+                                    console.log("data:", data.message);
+                                    $('#direct-chat-messages').addMsgrightHtml(data.message);
+                                    $('.box-body').animate({"scrollTop": $('.box-body')[0].scrollHeight}, "slow");
+                                    $('#message_body').val("");
+                                })
+                                .fail(function (jqXHR, textStatus, errorThrown) {
+                                    console.log('ggg :' + jqXHR.responseJSON.error.message);
+                                    $('.error-form').html(jqXHR.responseJSON.error.message);
+                                });
+
+                    }
+            );
+
+
+        }
+
+        function initchat(){
+            var $url_inbox=$('.box-body').data('url-thread_messages_unread');
+
+            setInterval(function(){
+                $.getJSON($url_inbox, function( data ) {
+                    $('#direct-chat-messages').addMsgleftHtml(data.messages);
+                });
+            }, 3000);
+        }
+
+
+        initAjaxForm();
+        initchat();
+        $('.box-body').scrollTop($('.box-body')[0].scrollHeight);
+
+    </script>
+{% endblock javascripts %}

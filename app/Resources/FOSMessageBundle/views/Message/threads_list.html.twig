@@ -1,0 +1,41 @@
+<ul class="body-messages">
+
+{% for thread in threads %}
+<li class="message"><!-- start message -->
+    <a  href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}"
+       class="thread {% if not fos_message_is_read(thread) %}bg-info{% else %}bg-gray{% endif %}">
+        <div class="pull-left">
+            <img src="{{ asset(thread.lastMessage.sender.photo.webPath) }}" class="img-circle message-user-img"
+                 alt="User Image">
+        </div>
+        <h4 style="font-weight: 600">
+            {% if thread.lastMessage %}
+                {{ thread.lastMessage.sender|e }}
+            {% else %}
+                ----
+            {% endif %}
+        </h4>
+
+        <small>
+            <i class="fa fa-clock-o"></i>
+            {{ thread.lastMessage.createdAt|date("F jS \\a\\t g:ia","Europe/Paris")}}
+        </small>
+        <p>{{ thread.lastMessage.body|slice(0,20)~'...' }}</p>
+    </a>
+    {% if fos_message_can_delete_thread(thread) %}
+        {% if fos_message_deleted_by_participant(thread) %}
+            {% set formAction %}{{ url('fos_message_thread_undelete', {'threadId': thread.id}) }}{% endset %}
+            {% set submitValue %}{% trans from 'FOSMessageBundle' %}undelete{% endtrans %}{% endset %}
+        {% else %}
+            {% set formAction %}{{ url('fos_message_thread_delete', {'threadId': thread.id}) }}{% endset %}
+            {% set submitValue %}{% trans from 'FOSMessageBundle' %}delete{% endtrans %}{% endset %}
+        {% endif %}
+        <form action="{{ formAction }}" method="post">
+            <button type="submit" class="link-remove label label-danger">{{ submitValue }}</button>
+        </form>
+    {% endif %}
+</li><!--  end message -->
+
+{% endfor %}
+
+</ul>

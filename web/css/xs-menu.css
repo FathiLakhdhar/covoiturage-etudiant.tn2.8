@@ -1,0 +1,150 @@
+/*
+ * Component: Control sidebar. By default, this is the right sidebar.
+ */
+.control-sidebar-bg {
+  position: fixed;
+  z-index: 1000;
+  bottom: 0;
+}
+.control-sidebar-bg,
+.control-sidebar {
+  top: 0;
+  right: -230px;
+  width: 230px;
+  -webkit-transition: right 0.3s ease-in-out;
+  -o-transition: right 0.3s ease-in-out;
+  transition: right 0.3s ease-in-out;
+}
+.control-sidebar {
+  position: fixed;
+  padding-top: 80px;
+  z-index: 1010;
+}
+
+
+.control-sidebar.control-sidebar-open,
+.control-sidebar.control-sidebar-open + .control-sidebar-bg {
+  right: 0;
+}
+
+.control-sidebar-open .control-sidebar-bg,
+.control-sidebar-open .control-sidebar {
+  right: 0;
+}
+
+
+
+
+.control-sidebar-dark {
+  color: #b8c7ce;
+}
+.control-sidebar-dark,
+.control-sidebar-dark + .control-sidebar-bg {
+  background: #222d32;
+}
+
+
+
+/************************************/
+.sidebar-menu {
+  font-size: 15px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  -ms-overflow-y: scroll;
+  overflow-y: scroll;
+
+}
+.sidebar-menu > li {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.sidebar-menu > li > a {
+  text-decoration: none;
+  padding: 2px 5px 2px 15px;
+  display: block;
+  color: #b8c7ce;
+  border-left: 4px solid transparent;
+}
+
+.sidebar-menu > li > a.active{
+  color: #FFFFFF;
+  border-left: 4px solid #00a7d0;
+  background-color: #000000;
+
+}
+
+
+
+.sidebar-menu > li > a > .fa,
+.sidebar-menu > li > a > .glyphicon,
+.sidebar-menu > li > a > .ion {
+  width: 20px;
+}
+.sidebar-menu > li .label,
+.sidebar-menu > li .badge {
+  margin-top: 3px;
+  margin-right: 5px;
+}
+.sidebar-menu li.header
+{
+  margin-bottom: 5px;
+  padding: 10px 25px 10px 15px;
+  font-size: 15px;
+  background-color: #404853;
+}
+
+.sidebar-menu li a.active .fa-angle-down {
+  -webkit-transform: rotate(-180deg);
+  -ms-transform: rotate(-180deg);
+  -o-transform: rotate(-180deg);
+  transform: rotate(-180deg);
+}
+
+
+.user-panel {
+  position: relative;
+  width: 100%;
+  padding: 10px;
+  overflow: hidden;
+}
+.user-panel>.image>img {
+  width: 60px;
+  height: 60px;
+  border: 4px solid #00a7d0;
+  margin-top: 10px;
+}
+.user-panel .info{
+  margin: 5px 15px;
+  color: #FFFFFF;
+}
+
+.user-panel i{
+  font-size: 30px;
+  color: #FFFFFF;
+}
+
+ul.slideToggle-menu>li>a{
+  text-decoration: none;
+  display: block;
+  color: #b8c7ce;
+  border-left: 4px solid transparent;
+}
+
+ul.slideToggle-menu>li>a>i{
+  margin-right: 5px;
+}
+
+ul.slideToggle-menu>li{
+}
+
+.sidebar-menu li.user-menu
+{
+  margin-bottom: 10px;
+  font-size: 15px;
+  background-color: #000000;
+}
+

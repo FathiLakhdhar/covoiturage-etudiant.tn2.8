@@ -1,0 +1,7 @@
+parameters:
+#    wanasni_vehicule.example.class: Wanasni\VehiculeBundle\Example
+
+services:
+#    wanasni_vehicule.example:
+#        class: %wanasni_vehicule.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

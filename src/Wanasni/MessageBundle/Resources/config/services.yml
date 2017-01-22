@@ -1,0 +1,7 @@
+parameters:
+#    wanasni_message.example.class: Wanasni\MessageBundle\Example
+
+services:
+#    wanasni_message.example:
+#        class: %wanasni_message.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

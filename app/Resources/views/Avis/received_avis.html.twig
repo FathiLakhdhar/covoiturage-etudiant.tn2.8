@@ -1,0 +1,78 @@
+{% extends ':Avis:layout.html.twig' %}
+
+
+
+{% block avis_contenu %}
+
+    <div class="row">
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div class="alert alert-{{ label }}">
+                    {{ flash }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+    </div>
+
+
+
+    <div class="row">
+
+        <div class="col-md-4"><!-- navPils menu -->
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="{{ path('avis_laisser') }}">Laisser un avis</a></li>
+                <li class="active"><a href="{{ path('avis_received') }}">Avis reçus</a></li>
+                <li><a href="{{ path('avis_given') }}">Avis laissés</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-8">
+
+            <h3 class="page-header violet-red">
+                Avis reçus
+            </h3>
+
+
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <span class="badge" style="background-color: #4CAF50;">{{ parfait }}%</span>
+                            Parfait
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge" style="background-color: #8BC34A;">{{ tresBien }}%</span>
+                            Très bien
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge" style="background-color: #00BCD4;">{{ bien }}%</span>
+                            Bien
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge" style="background-color: #FF9800;">{{ decevant }}%</span>
+                            Décevant
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge" style="background-color: #FF5722;">{{ eviter }}%</span>
+                            À éviter
+                        </li>
+                    </ul>
+
+                </div>
+
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+{% endblock avis_contenu %}

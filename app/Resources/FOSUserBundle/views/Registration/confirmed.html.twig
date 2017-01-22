@@ -1,0 +1,16 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 alert alert-success">
+                <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock fos_user_content %}

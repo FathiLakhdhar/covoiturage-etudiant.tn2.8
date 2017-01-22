@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}
+    {% trans from 'FOSMessageBundle' %}messenger{% endtrans %}
+{% endblock title %}
+
+{% block body %}
+    <div class="container" style="margin-top: 100px">
+
+        <ul id="nav-pills-h-profil-e" class="nav nav-pills nav-justified">
+            <li class="triangle-down">
+                <a href="{{ path('mes-trajets') }}">
+                    <i class="fa fa-car"></i>
+                    <p>Covoiturages</p>
+                </a>
+            </li>
+            <li class="triangle-down">
+                <a href="{{ path('avis_laisser') }}">
+                    <i class="fa fa-star"></i>
+                    <p>Avis</p>
+                </a>
+            </li>
+            <li class="triangle-down">
+                <a href="{{ path('mes-alertes') }}">
+                    <i class="fa fa-bullhorn"></i>
+                    <p>Alerts</p>
+                </a>
+            </li>
+            <li class="triangle-down active">
+                <a href="{{ path('fos_message_inbox') }}">
+                    <i class="fa fa-envelope-o"></i>
+                    <p>Messages</p>
+                </a>
+            </li>
+            <li class="triangle-down">
+                <a href="{{ path('vos_notifications') }}">
+                    <i class="fa fa-bell-o"></i>
+                    <p>Notifications</p>
+                </a>
+            </li>
+            <li class="triangle-down">
+                <a href="{{ path('fos_user_profile_edit') }}">
+                    <i class="flaticon-man flat-2x"></i>
+                    <p>Profil</p>
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content thumbnail">
+
+
+            <h1 class="page-header violet-red">{% trans from 'FOSMessageBundle' %}messenger{% endtrans %}</h1>
+            <div class="row">
+                <div class="col-md-4">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li class="active"><a href="{{ url('fos_message_inbox') }}">{% trans from 'FOSMessageBundle' %}
+                                inbox{% endtrans %}</a>
+                        </li>
+                        <li class="">
+                            <a class="" href="{{ url('fos_message_thread_new' )}}">
+                                {% trans from 'FOSMessageBundle' %}send_new{% endtrans %}
+                            </a>
+                        </li>
+                        <li><a href="{{ url('fos_message_sent') }}">{% trans from 'FOSMessageBundle' %}
+                                sent{% endtrans %}</a></li>
+                        <li><a href="{{ url('fos_message_deleted') }}">{% trans from 'FOSMessageBundle' %}
+                                deleted{% endtrans %}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-8">
+                    <div class="thumbnail">
+                        {% block fos_message_content %}{% endblock %}
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock body %}
+
+

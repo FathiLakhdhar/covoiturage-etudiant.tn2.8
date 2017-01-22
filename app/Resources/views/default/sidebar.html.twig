@@ -1,0 +1,74 @@
+<aside id="control-sidebar" class="control-sidebar control-sidebar-dark ">
+
+
+    <ul class="sidebar-menu ">
+
+        {% if app.user %}
+            <li class="user-menu">
+
+                <a class="user-panel text-center slideToggle">
+                    <div class="image">
+                        <img src="{{ asset(app.user.photo.webPath) }}" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <p>{{ app.user.firstname ~' '~app.user.lastname }}</p>
+                    </div>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+
+                <ul class="slideToggle-menu" style="display:none">
+                    <li>
+                        <a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user"></i>Profil</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('fos_message_inbox') }}"><i class="fa fa-envelope-o"></i>Message</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('vos_notifications') }}"><i class="fa fa-bell-o"></i>Notification</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('mes-alertes') }}"><i class="fa fa-bullhorn"></i>Alertes</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-star"></i>Avis</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('mes-trajets') }}"><i class="fa fa-car "></i>Covoiturage</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out"></i>Deconnexion</a>
+                    </li>
+                </ul>
+            </li>
+
+
+        {% else %}
+            <li>
+                <a href="{{ path('fos_user_security_login') }}"  id="idAccueil">
+                    <i class="fa fa-sign-in"></i> Se Connecte
+                </a>
+                <a href="{{ path('fos_user_registration_register') }}"  id="idAccueil">
+                    <i class="fa fa-pencil"></i> S' Inscrire
+                </a>
+            </li>
+
+        {% endif %}
+
+
+        <li class="header">MAIN NAVIGATION</li>
+        <li>
+            <a href="{{ path('homepage') }}" class="active" id="idAccueil">
+                <i class="ion-ios-home-outline"></i> Accueil
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('trajet_search') }}" id="idRechercher"> <i class="ion-ios-search"></i> Rechercher</a>
+        </li>
+        <li>
+            <a href="{{ path('trajet_proposer_unique') }}" id="idProposer"> <i class="ion-ios-compose-outline"></i>
+                Proposer</a>
+        </li>
+    </ul>
+
+</aside>
+<div class="control-sidebar-bg"></div>

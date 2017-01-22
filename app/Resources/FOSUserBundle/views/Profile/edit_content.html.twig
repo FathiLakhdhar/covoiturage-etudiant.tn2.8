@@ -1,0 +1,159 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+
+<div class="container">
+    {{ include('@FOSUser/Profile/nav_pills_profile.html.twig') }}
+    <div class="tab-content thumbnail">
+        <!-- Tab pane Profile -->
+        <div id="Profil" class="tab-pane fade in active">
+            <div class="page-header">
+                <h2 class="violet-red">Profil</h2>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li class="active"><a href="{{ path('fos_user_profile_edit') }}">Informations personnelles</a>
+                        </li>
+                        <li><a href="{{ path('photo_edit') }}">Photo</a></li>
+                        <li><a href="{{ path('cars-show') }}">Véhicule</a></li>
+                        <li><a href="{{ path('fos_user_change_password') }}">Mot de passe</a></li>
+                        <li><a href="#">Fermeture de compte</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-8">
+
+                    <div class="tab-content thumbnail">
+
+                        <div id="info_personnel" class="tab-pane fade in active">
+                            <div class="page-header">
+                                <h2 class="violet-red">Informations personnelles</h2>
+                            </div>
+
+                            {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
+
+                            <div class="form-group">
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        {{ form_label(form.firstname) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form_errors(form.firstname,{'attr':{'class':'text-danger'}}) }}
+                                        {{ form_widget(form.firstname) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        {{ form_label(form.lastname) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form_errors(form.lastname,{'attr':{'class':'text-danger'}}) }}
+                                        {{ form_widget(form.lastname) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        {{ form_label(form.username) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form_errors(form.username,{'attr':{'class':'text-danger'}}) }}
+                                        {{ form_widget(form.username,{'attr':{'class':'form-control'}}) }}
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        {{ form_label(form.email) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form_errors(form.email,{'attr':{'class':'text-danger'}}) }}
+                                        {{ form_widget(form.email,{'attr':{'class':'form-control'}}) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        {{ form_label(form.date_naissance) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form_errors(form.date_naissance,{'attr':{'class':'text-danger'}}) }}
+                                        {{ form_widget(form.date_naissance) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        {{ form_label(form.phone) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form_errors(form.phone,{'attr':{'class':'text-danger'}}) }}
+                                        {{ form_widget(form.phone) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        {{ form_label(form.minibio) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form_errors(form.minibio,{'attr':{'class':'text-danger'}}) }}
+                                        {{ form_widget(form.minibio) }}
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="row ">
+                                    <div class="col-md-3">
+                                        {{ form_label(form.current_password) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form_errors(form.current_password,{'attr':{'class':'text-danger'}}) }}
+                                        {{ form_widget(form.current_password,{'attr':{'class':'form-control'}}) }}
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="text-center">
+                                <input type="submit" value="{{ 'profile.edit.submit'|trans }}" class="btn btn-primary"/>
+                            </div>
+                            {{ form_end(form) }}
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div><!-- end Tab pane Profile -->
+    </div>
+</div>
+
+
+
+

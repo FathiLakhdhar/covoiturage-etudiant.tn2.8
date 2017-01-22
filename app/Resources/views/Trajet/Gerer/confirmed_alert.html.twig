@@ -1,0 +1,20 @@
+{% extends ':Trajet:layout.html.twig'%}
+
+
+{% block title %}Alert-create{% endblock title %}
+
+
+
+{% block body %}
+
+    <section class="container section-padding-top-bottom-80">
+    {% for label, flashes in app.session.flashbag.all %}
+        {% for flash in flashes %}
+            <div class="alert alert-{{ label }}">
+                {{ flash }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    </section>
+{% endblock body %}

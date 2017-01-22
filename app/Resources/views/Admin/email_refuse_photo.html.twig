@@ -1,0 +1,39 @@
+<html>
+<head>
+    <title>Photo refuse</title>
+</head>
+<body>
+
+
+<div style="padding: 10px; background-color: #00c0ef; border-radius: 10px">
+    <h3 style="color: #FFFFFF">Bonjour {{ photo.user.username }}</h3>,
+
+    <p style="color: #FFFFFF">
+        Votre photo a été vérifiée par notre équipe Relations et n'a pas pu être validée.
+    </p>
+</div>
+
+
+<p>
+    Nous ne pouvons pa accepter une photo si:
+</p>
+
+<ul>
+    <li>vous être difficilement reconnaissable à cause de sa qualité</li>
+    <li>vous portez des lunettes de soleil</li>
+    <li>ce n'est pas une photo de vous, ou nous ne pouvons pas dire qui vous être dessus</li>
+    <li>la photo ne respecte pas notre charte</li>
+</ul>
+
+
+<p>
+    Enregistrez une nouvelle photo
+</p>
+<a style="background-color: #f6a828;padding: 5px; color: #FFFFFF; font-size: 18px; text-decoration: none; border-radius: 3px;display: inline-block;" href="{{ url('photo_edit') }}">Modifier la photo</a>
+
+
+
+</body>
+</html>
+
+

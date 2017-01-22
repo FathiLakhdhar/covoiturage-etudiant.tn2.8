@@ -1,0 +1,237 @@
+{% extends ':Trajet/Proposer:proposer.html.twig' %}
+
+
+{% block title %} {{ parent() }}-Unique {% endblock title %}
+
+
+{% block body %}
+    {{ parent() }}
+    <div id="proposer" class="container" >
+
+        {{ form_start(form, {'method': 'post', 'action': path('trajet_proposer_unique'), 'attr': {'class':''}}) }}
+
+
+        <div class="row">
+            <div class="col-md-8">
+                {% if not form.vars.valid %}
+                    <div class="alert alert-danger">
+                        {{ form_errors(form)}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+
+
+
+        <div class="row">
+            <!-- Trajet -->
+            <div class="col-lg-8">
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="active">
+                        <a>
+                            Trajet unique
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('trajet_proposer_regulier') }}">
+                            Trajet régulier
+                        </a>
+                    </li>
+                </ul>
+
+
+                <!-- tab-content -->
+
+                <div class="tab-content thumbnail">
+                    <div class="row">
+                        <div id="trajet-unique" class="tab-pane fade active in ">
+                            <div class="col-md-6 bg-light-blue  triangle-up triangle-up-light-blue">
+                                <p>Un week-end épique à Pornic, un savoureux pique-nique chez Annick,
+                                    un festival de beatnik, c'est la même logique, déposez un TRAJET UNIQUE !
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="trajet-regular" class="tab-pane fade">
+                            <div class="col-md-6 bg-light-blue  triangle-up triangle-up-light-blue">
+                                <p>
+                                    Pour aller travailler, que vous soyez cadre dans un musée,
+                                    vendeuse d'eau déshydratée ou étudiant en prospérité, déposez un TRAJET RÉGULIER !
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="form-proposer">
+
+                        {{ form_widget(form.frequence) }}
+                        <!-- Itinéraire -->
+                        <section>
+                            {{ include(':Trajet/Proposer:itineraire.html.twig') }}
+                        </section>
+                        <!-- End Itinéraire -->
+
+                        <section><!-- Date et heure -->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h3 class="page-header">
+                                        Date et heure
+                                    </h3>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="material-switch pull-right page-header">
+                                        {{ form_widget(form.round_trip) }}
+                                        {{ form_label(form.round_trip,'Trajet aller-retour',{'label_attr': {'class': 'bg-green'}}) }}
+                                    </div>
+                                    {{ form_errors(form.round_trip)}}
+                                </div>
+
+                            </div>
+
+
+                            <div id="publication-unique">
+
+                                <div class="Aller row">
+                                    <div class="col-md-4">
+                                        {{ form_label(form.date_allet_unique,'Date Aller') }}
+                                        <div class="pos-relative">
+                                            <span class="fa fa-calendar  date-icon"></span>
+                                            {{ form_widget(form.date_allet_unique) }}
+                                            {{ form_errors(form.date_allet_unique)}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ form_label(form.heureAller,'Heure Aller') }}
+                                        {{ form_widget(form.heureAller) }}
+                                        {{ form_errors(form.heureAller)}}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_label(form.Depart_prevu,'Depart Prévu') }}
+                                        {{ form_widget(form.Depart_prevu) }}
+                                        {{ form_errors(form.Depart_prevu)}}
+                                    </div>
+
+                                </div>
+
+
+                                <div class="Retour row return-container" style="display: none;">
+                                    <div class="col-md-4">
+                                        {{ form_label(form.date_retour_unique,'Date Retour') }}
+                                        <div class="pos-relative">
+                                            <span class="fa fa-calendar  date-icon"></span>
+                                            {{ form_widget(form.date_retour_unique,{'attr':{'class':'text-indent form-control'}}) }}
+                                            {{ form_errors(form.date_retour_unique)}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ form_label(form.heureRetour,'Heure Retour') }}
+                                        {{ form_widget(form.heureRetour) }}
+                                        {{ form_errors(form.heureRetour)}}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </section><!-- End Date et heure -->
+
+                        <section><!-- Options du trajet -->
+                            {{ include(':Trajet/Proposer:options_du_trajet.html.twig') }}
+                        </section><!-- End Options du trajet -->
+
+
+                        <section><!-- Informations complémentaires  -->
+                            <h3 class="page-header">
+                                Informations complémentaires
+                            </h3>
+
+                            <p class="col-sm-12">Vous pouvez préciser : le lieu de rendez-vous, votre style de conduite,
+                                …
+                        <span class="mini-text pull-right">
+                            <span id="description-chars">0</span> / 500 caractères
+                        </span>
+                            </p>
+
+                            <div>
+                                {{ form_widget(form.informationsComplementaires) }}
+                            </div>
+                            {{ form_errors(form.informationsComplementaires)}}
+                        </section><!-- End Informations complémentaires -->
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Map -->
+            <div class="col-lg-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <!-- Default panel contents -->
+                            <h4 class="panel-heading uppercase" style="margin-top: 0px;background-color: #607D8B !important;color: white;"><i class="ion ion-map"></i> Votre itinéraire</h4>
+                            <div class="panel-body">
+                                <div id="map"></div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="thumbnail">
+                            <div id="directions-panel"></div>
+                            {% set prix_optimal_url = path('prix_optimal', {'metre':'__METRE__'}) %}
+                            <ul id="Segments" class="Segments list-unstyled"
+                                data-prototype="<li>Prix : {{ form_widget(form.arrPrix.vars.prototype)|e }}</li>"
+                                data-prix-optimal-url="{{ prix_optimal_url }}">
+                                {% for prix in form.arrPrix %}
+                                    <li>{{ form_widget(prix) }}</li>
+                                {% endfor %}
+
+                                {{ form_errors(form.arrPrix) }}
+                            </ul>
+                            <div id="panel">
+                                {{ form_widget(form.totalDistance) }}
+                                {{ form_errors(form.totalDistance) }}
+                                {{ form_widget(form.totalDuration) }}
+                                {{ form_errors(form.totalDuration) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="thumbnail">
+                            <section class="alert ">
+                                <div class="row">
+                                    <div class="col-xs-1">
+                                        {{ form_widget(form.cgu) }}
+                                    </div>
+                                    <div class="col-xs-11">
+                                        {{ form_label(form.cgu) }}
+                                    </div>
+                                </div>
+                            </section>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary btn-bg btn-block">Proposer votre
+                                            trajet
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        {{ form_end(form) }}
+    </div>
+{% endblock body %}
+

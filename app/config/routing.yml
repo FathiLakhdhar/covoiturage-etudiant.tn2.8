@@ -1,0 +1,53 @@
+homepage:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    'default/index.html.twig'
+
+
+wanasni_avis:
+    resource: "@WanasniAvisBundle/Controller"
+    prefix:   /avis
+    type:     annotation
+
+wanasni_admin:
+    resource: "@WanasniAdminBundle/Controller"
+    type: annotation
+    prefix:   /admin
+
+wanasni_photo:
+    resource: "@WanasniPhotoBundle/Controller"
+    type:     annotation
+
+wanasni_api:
+    resource: "@WanasniApiBundle/Controller"
+    type:     annotation
+
+wanasni_vehicule:
+    resource: "@WanasniVehiculeBundle/Controller"
+    type:     annotation
+
+wanasni_message:
+    resource: "@WanasniMessageBundle/Controller"
+    type:     annotation
+    prefix:   /messages
+
+wanasni_notification:
+    resource: "@WanasniNotificationBundle/Controller"
+    type:     annotation
+    prefix:   /notifications
+
+wanasni_trajet:
+    resource: "@WanasniTrajetBundle/Controller"
+    type:     annotation
+
+
+# FosUserBundle Routing EN
+fos_user:
+    resource: "@WanasniUserBundle/Resources/config/all.xml"
+
+#FosMessageBundle
+fos_message:
+    resource: "@FOSMessageBundle/Resources/config/routing.xml"
+    prefix:   /messages
+

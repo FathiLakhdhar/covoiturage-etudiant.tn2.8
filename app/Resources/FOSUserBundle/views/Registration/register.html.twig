@@ -1,0 +1,29 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% block title %}S'inscrire{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css"  href="{{ asset('css/style_Security.css') }}"/>
+{% endblock stylesheets %}
+
+{% block fos_user_content %}
+{% include "FOSUserBundle:Registration:register_content.html.twig" %}
+{% endblock fos_user_content %}
+
+
+{% block footer %}
+    <footer>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="footer-border"></div>
+                    <p><a href="{{ path('homepage') }}"><strong>{{ site }}</strong></a>
+                        <i class="fa fa-smile-o"></i></p>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+{% endblock footer %}

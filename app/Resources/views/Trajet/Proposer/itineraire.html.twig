@@ -1,0 +1,82 @@
+<div class="page-header">
+    <h3>
+        Itinéraire
+    </h3>
+</div>
+<ul class="points_trajet list-unstyled">
+
+
+    <li class="point">
+        <div class="form-group col-7">
+            <div class="from pos-relative">
+
+                <span class="glyphicon glyphicon-map-marker green input-icon"></span>
+                {{ form_label(form.Origine.lieu, 'Origine', {'label_attr': {'class': 'sr-only'}}) }}
+                {{ form_widget(form.Origine.lieu, {'attr': {'class': 'form-Origine-lieu form-control text-indent',
+                    'placeholder':'Origine'} } ) }}
+                {{ form_widget(form.Origine.latitude) }}
+                {{ form_widget(form.Origine.longitude) }}
+
+                {{ form_errors(form.Origine.lieu) }}
+                {{ form_errors(form.Origine.latitude) }}
+                {{ form_errors(form.Origine.longitude) }}
+
+            </div>
+        </div>
+    </li>
+
+        <li class="point_Destination">
+            <div class="form-group col-7">
+            <div class="to pos-relative">
+
+                {{ form_label(form.Destination.lieu, 'Destination', {'label_attr': {'class': 'sr-only'}}) }}
+
+                {{ form_widget(form.Destination.lieu, {'attr': {'class': 'form-Destination-lieu form-control  text-indent',
+                    'placeholder':'Destination'} } ) }}
+                <span class="glyphicon glyphicon-map-marker red input-icon"></span>
+                {{ form_widget(form.Destination.latitude) }}
+                {{ form_widget(form.Destination.longitude) }}
+
+                {{ form_errors(form.Destination.lieu) }}
+                {{ form_errors(form.Destination.latitude) }}
+                {{ form_errors(form.Destination.longitude) }}
+            </div>
+            </div>
+        </li>
+
+</ul>
+    <a id="btn-route" class="btn btn-green pull-right"> <i class="fa fa-map-o fa-2x"></i> </a>
+    <div>
+        <h3>Villes étapes</h3>
+        <p>Augmentez vos chances d’avoir des passagers en ajoutant des
+            villes étapes :</p>
+
+        <div class="col-7">
+            <ul id="waypoints" class="waypoint-list list-unstyled sortable"
+                data-prototype="<li class='point form-group '><div class='waypoint pos-relative'>
+                <span class='glyphicon glyphicon-map-marker marker yellow-dark input-icon'></span>
+                <i class='ion ion-navicon-round drag drag-icon'></i>
+                {{ form_widget(form.waypoints.vars.prototype.lieu)|e }}
+                {{ form_widget(form.waypoints.vars.prototype.latitude)|e }}
+                {{ form_widget(form.waypoints.vars.prototype.longitude)|e }}</div></li>">
+
+                {% for waypoint in form.waypoints %}
+                    <li class="point form-group">
+                        <div class="waypoint pos-relative">
+                            <span class="glyphicon glyphicon-map-marker marker yellow-dark input-icon"></span>
+                            <i class="ion ion-navicon-round drag drag-icon"></i>
+                            {{ form_widget(waypoint.lieu) }}
+                            {{ form_widget(waypoint.latitude) }}
+                            {{ form_widget(waypoint.longitude) }}
+                            {{ form_errors(waypoint.lieu) }}
+                            {{ form_errors(waypoint.latitude) }}
+                            {{ form_errors(waypoint.longitude) }}
+                        </div>
+                    </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+
+
+    </div>

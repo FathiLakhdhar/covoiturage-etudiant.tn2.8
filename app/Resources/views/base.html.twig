@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <!-- HTML5 Shiv and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    {% block stylesheets %}
+        {#
+                {% stylesheets output="css/app.css"
+                "%kernel.root_dir%/Resources/assets/css/*" %}
+                <link rel="stylesheet" href="{{ asset_url }}"/>
+                {% endstylesheets %}
+                 #}
+
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/melon.datepicker.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/xs-menu.css') }}">
+        <link rel="stylesheet" type="text/css"  href="{{ asset('css/form_elements.css') }}"/>
+        <link rel="stylesheet" type="text/css"  href="{{ asset('css/flaticon.css') }}"/>
+        <link rel="stylesheet" type="text/css"  href="{{ asset('css/animate.css') }}"/>
+        <!-- iCheck -->
+        <link rel="stylesheet" type="text/css"  href="{{ asset('iCheck/skins/flat/_all.css') }}"/>
+
+        <!-- Select 2 -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
+
+        <link href="{{ asset('css/s2_app.css') }}" rel="stylesheet" />
+
+        <!-- data Table -->
+        <link href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+
+</head>
+<body>
+
+{% block header %}
+
+    <!-- Ajax Load img.Gif -->
+    <div id="loader" class="loader" style="display: none">
+        <img id="img-loader" src="{{ asset('img/Preloader.gif') }}" alt="Loading"/>
+    </div>
+
+    <header id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-10 ">
+                    <div class="logo-wrapper">
+                        <img src="{{ asset('img/logofin.png') }}" alt="Student Carpooling"/>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-7 col-sm-7 hidden-xs">
+
+                    <!-- Menu hidden lg -->
+                    <div class="menu-links">
+                        <a href="{{ path('homepage') }}" class="uppercase" id="idAccueil">
+                            {#<i class="ion-ios-home-outline"></i>#} Accueil
+                        </a>
+                        <a href="{{ path('trajet_search') }}" class="uppercase"  id="idRechercher"> {#<i class="ion-ios-search"></i>#} Rechercher</a>
+                        <a href="{{ path('trajet_proposer_unique') }}" class="uppercase" id="idProposer"> {#<i class="ion-ios-compose-outline"></i>#} Proposer</a>
+                    </div>
+
+
+                </div>
+
+                <div class="col-lg-3 col-md-5 col-sm-5 hidden-xs">
+
+
+
+
+                        {% if app.user %}{# Connecte #}
+                            <div class="menu-client">
+                                {{ include(':default:menu_client_cnx.html.twig') }}
+                            </div>
+                        {% else %} {# ! Connecte #}
+                            <div class="links-anonymouse">
+                                <a href=" {{ path('fos_user_registration_register') }}" class=" btn btn-custom btn-Contour">S'inscrire</a>
+                                <a class=" btn btn-custom btn-vert" data-toggle="modal" data-target="#idModalLogin">Se connecter</a>
+                            </div>
+
+                        {% endif %}
+
+                </div>
+
+
+                <!-- Menu xs -->
+                <div class="col-xs-2 visible-xs menu-xs">
+                    <div class="menu-xs-bg">
+                        <a href="#" data-toggle="control-sidebar" id="menu-xs" >
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </header>
+
+
+    <!--Modal Dropdown login -->
+    {{ include(':default:Modal_log.html.twig') }}
+
+    <!-- control-sidebar -->
+    {{ include('default/sidebar.html.twig') }}
+
+
+
+{% endblock %}
+
+{% block body %}{% endblock %}
+
+
+{% block footer %}
+    <!-- Footer -->
+    <audio id="chatAudio">
+        <source src="{{ asset('sound/notification.mp3') }}" type="audio/mp3">
+    </audio>
+
+    <footer class="text-center">
+
+
+        <div class="footer-body">
+                <section id="social section-padding-top-bottom-80">
+                    <div class="container">
+
+
+                        <div class="social-login text-center" style="margin: 20px 0px;">
+
+
+                            <div class="social-login-buttons">
+                                <a class="btn btn-link-2" href="#">
+                                    <i class="fa fa-facebook"></i> Facebook
+                                </a>
+                                <a class="btn btn-link-2" href="#">
+                                    <i class="fa fa-twitter"></i> Twitter
+                                </a>
+                                <a class="btn btn-link-2" href="#">
+                                    <i class="fa fa-google-plus"></i> Google Plus
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+        </div>
+
+        <div class="footer">
+            <p>
+                {{ site }}
+            </p>
+        </div>
+
+    </footer>
+{% endblock %}
+
+{% block javascripts %}
+
+    {#
+    {% javascripts  output="js/app.js"
+    "%kernel.root_dir%/Resources/assets/js/*" %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+#}
+    {#
+    <script language="JavaScript" src="{{ asset('js/app.js') }}"></script>
+#}
+
+    <script src="{{ asset('js/jguery.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('iCheck/js/icheck.js') }}"></script>
+    <script src="{{ asset('js/autoCompleteContacts.js') }}"></script>
+    <script src="{{ asset('js/messanger.js') }}"></script>
+    <script src="{{ asset('js/upload_photo.js') }}"></script>
+    <script src="{{ asset('js/jquery.inputmask.js') }}"></script>
+    <script src="{{ asset('js/jquery.viewportchecker.js') }}"></script>
+    <!-- Select2 js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
+    <!-- data Table -->
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+
+    <script language="JavaScript">
+
+        $(function () {
+
+            $('input[class=iCheck]').iCheck({
+                checkboxClass: 'icheckbox_flat-green',
+                radioClass: 'iradio_flat-green',
+                increaseArea: '20%'
+            });
+
+            $(".slideToggle").click(function(){
+                $(".slideToggle-menu").slideToggle();
+                $(this).toggleClass('active');
+            });
+
+            $("#menu-xs").click(function(){
+                $("#control-sidebar").toggleClass('control-sidebar-open');
+            });
+            var $options_Date=
+            {
+                dateFormat: "yy-mm-dd",
+                minDate: new Date(),
+                maxDate: "+1y",
+                monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+                dayNames: [ "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi" ],
+                dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+                dayNamesShort: [ "Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam" ]
+            };
+
+
+            $("[datepicker='']").datepicker($options_Date);
+
+            $("[datepicker]").datepicker('widget').wrap('<div class="ll-skin-melon"/>');
+
+            $("[data-toggle=tooltip]").tooltip();
+
+            $(".tooltip_profil").tooltip({
+                content: function(callback){
+                    var elem=$(this);
+                    var url=elem.data('tooltip-profil-url');
+                    $.ajax( url )
+                            .done(function(data) {
+                                callback(data);
+                            });
+
+                    return 'loading...';
+                }
+            });
+
+            $( ".car-place-spinner" ).spinner({
+                min:1,
+                max:9
+            });
+
+            $('.table-data').DataTable();
+
+
+        });
+
+
+
+    </script>
+
+
+
+{% endblock %}
+</body>
+</html>

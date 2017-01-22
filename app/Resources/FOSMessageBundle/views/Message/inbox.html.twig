@@ -1,0 +1,32 @@
+{% extends 'FOSMessageBundle::layout.html.twig' %}
+
+{% block fos_message_content %}
+
+    <!-- Tab pane Messages -->
+    <div id="Messages" class="tab-pane fade in active">
+        <div class="page-header">
+            <h2 class="violet-red">{% trans from 'FOSMessageBundle' %}inbox{% endtrans %}</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="messages thumbnail">
+                    <div class="heading-messages">
+                        <h2>Tous les messages</h2>
+                        <div class="pos-relative">
+                            <span class="glyphicon glyphicon-search input-icon"></span>
+                            <input type="text" class="form-control text-indent">
+                        </div>
+                    </div>
+                        {% include 'FOSMessageBundle:Message:threads_list.html.twig' with {'threads': threads} %}
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <!-- end Tab pane Messages -->
+    </div>
+
+{% endblock %}

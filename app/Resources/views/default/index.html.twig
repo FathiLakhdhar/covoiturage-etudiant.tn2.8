@@ -1,0 +1,349 @@
+{% extends '::base.html.twig' %}
+{% block title %}Accueil{% endblock %}
+{% block body %}
+
+    {#  Cover   #}
+
+    <div id="home">
+        <div class="overlay">
+            <div class="container-fluid">
+
+
+                <div class="row">
+                    <div class="overlay-text">
+                        <div class="col-lg-3 text-center pull-right hidden animate-zoom-in-right">
+                            <h1 class="align-right"><span class="red">Just Go</span><br/><span
+                                        class="font-weight-normal">with us</span></h1>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6  pull-right">
+
+                        <p class="home-Membre-bg align-right hidden animate-zoom-in-right">
+                            Un covoiturage special etudiant pour la premiere fois sit amet, consectetur adipiscing elit.
+                            Quisque maximus leo nisl, et tincidunt magna pretium et. Fusce iaculis sollicitudin nunc
+                            mollis lacinia.Fusce iaculis sollicitudin nunc mollis lacinia.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    {#  PROFITEZ DES AVANTAGES DU COVOITURAGE WANASNI  #}
+
+    <div id="avantage">
+        <section>
+            <div class="container">
+                <div class="row ">
+                    <div class="col-lg-12 text-center margin-top-buttom heading-title">
+                        <h2>
+                            Avantages
+                        </h2>
+
+                    </div>
+                </div>
+                <div class="row " style="padding-bottom: 80px">
+                    <div class="col-lg-4 col-md-3  col-sm-12 text-center hidden animate-bounce-in-left">
+
+                        <div class="avantages-icon">
+                            <img src="{{ asset('img/sedan-car-front.png') }}">
+                        </div>
+                        <h3>Rapide et pratique</h3>
+                        <p>
+                            Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                            there
+                        </p>
+                    </div>
+                    <div class="col-lg-4  col-md-3   col-sm-12 text-center hidden animate-fade-in">
+                        <div class="avantages-icon ">
+                            <img src="{{ asset('img/payment-method.png') }}">
+                        </div>
+                        <h3>Economique</h3>
+                        <p>
+                            Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                            there
+                        </p>
+                    </div>
+                    <div class="col-lg-4   col-md-3  col-sm-12 text-center hidden animate-bounce-in-right">
+                        <div class="avantages-icon">
+                            <img src="{{ asset('img/couple-kissing.png') }}">
+                        </div>
+                        <h3>Amitié</h3>
+                        <p>
+                            Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                            there
+
+                        </p>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+    </div>
+
+    {#-- Section Video --#}
+
+    <div class="covoiturage-special sc-bg-covo">
+        <div class="container">
+            <div class="row ">
+                <div class="col-lg-6 col-lg-offset-3 text-center margin-top-buttom heading-title">
+                    <div class="animate-jello" style="background-color: rgba(255, 255, 255, 0.73);padding: 1px 20px;">
+                        <h2>
+                            Un covoiturage spécial étudiant !
+                        </h2>
+                        <p>
+                            Les galères de transports et le retard, c’est fini !
+                            Covoiturage, c’est jusqu’à 8 fois moins cher qu’un taxi et plus confortable qu’un métro.
+                            Covoiturer , c’est déplacer dans la bonne humeur !
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent trajet -->
+    <section class="section-padding-top-bottom-80 covoiturage-recent">
+
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 text-center margin-top-buttom">
+
+                    <div class="heading-title">
+                        <h2>Covoiturages récents</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% set recentTrajets = wanasni_recent_trajet() %}
+                {% for trajet in recentTrajets %}
+
+                    <div class="col-lg-4 hidden animate-fade-in-up">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    {{ trajet.origine.lieu }}
+                                    {% if trajet.roundTrip %}
+                                        <i class="ion ion-arrow-swap"></i>
+                                    {% else %}
+                                        <i class="ion ion-arrow-right-c"></i>
+                                    {% endif %}
+                                    {{ trajet.destination.lieu }}
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p>
+                                            Publier : {{ trajet.proposerAt|date("d-m-Y") }}
+                                        </p>
+                                        <p>
+                                            <strong>{{ trajet.nbPlacesRestants }}</strong> place(s) disponible(s).
+                                        </p>
+                                        <p>
+                                            <strong>{{ trajet.totalPrix }} TND</strong> par passager
+                                        </p>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <a href="{{ path('trajet_show',{'id':trajet.id}) }}"
+                                           class="btn red-btn"><strong>+ détails</strong></a>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                {% else %}
+
+                        <p class="text-center">Pour le moment, il n'y a pas de trajet déposé à cette date.
+                            Vous pouvez déposer un trajet ou créer une alerte dès maintenant.</p>
+
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <!-- Contactez-Nous -->
+    <section id="contact" class="section-padding-top-bottom-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 text-center margin-top-buttom">
+
+                    <div class="heading-title">
+                        <h2>Contactez-Nous</h2>
+                        <p style="color: white;">Si vous avez des questions, n'hésitez pas à contacter le service de {{ app_name }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 hidden animate-bounce-in-left">
+                    <div class="section-text">
+                        <h4></h4>
+                        <p style="color: white;"><i class="fa fa-phone"></i> +216 22 554 440</p>
+                        <p style="color: white;"><i class="fa fa-envelope"></i> mail@domaine.com</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 hidden animate-bounce-in-right">
+                    <form id="contact_form" name="sentMessage" method="post" action="{{ path('api_contactez_nous') }}"
+                          class="contact_form">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Nom *" id="name" name="name">
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" placeholder="Email *" id="email"
+                                           name="email">
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea class="form-control" placeholder="Message *" id="message"
+                                              name="message"></textarea>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <div id="success"></div>
+                                <button type="submit" class="btn red-btn">Envoyer</button>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+
+                <div class="col-md-3">
+                    <p class="red error-form"></p>
+                    <p class="green succes-form"></p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Suivez-Nous -->
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script>
+        $(function () {
+            $('.menu-links a').removeClass('active');
+            $('#idAccueil').addClass('active');
+        });
+
+        function AjaxFormContactNous() {
+            $('body').on('submit', '.contact_form', function (e) {
+                        e.preventDefault();
+                        $.ajax({
+                                    type: $(this).attr('method'),
+                                    url: $(this).attr('action'),
+                                    data: $(this).serialize()
+                                })
+                                .done(function (data) {
+                                    $('input#name').val("");
+                                    $('input#email').val("");
+                                    $('textarea#message').val("");
+                                    $('.error-form').html("");
+                                    $('.succes-form').html('<i class="ion ion-checkmark-circled"></i>');
+                                })
+                                .fail(function (jqXHR, textStatus, errorThrown) {
+                                    console.log('error :' + jqXHR.responseJSON.error.message);
+                                    var $strErrors = "";
+                                    $.each(jqXHR.responseJSON.error.liste_erreurs, function (index, value) {
+                                        $strErrors += "<i class='ion ion-close-circled'></i> " + value + "<br>";
+                                    });
+                                    $('.succes-form').html("");
+                                    $('.error-form').html($strErrors);
+                                });
+
+                    }
+            );
+        }
+
+
+        $(document).ready(function () {
+
+            $('.animate-zoom-in-right').removeClass('hidden').addClass("visible animated zoomInRight");
+            $('.animate-zoom-in-down').removeClass('hidden').addClass("visible animated zoomInDown");
+
+            $('.animate-bounce-in-left').viewportChecker({
+                classToAdd: 'visible animated bounceInLeft',
+                classToRemove: 'hidden',
+                invertBottomOffset: false,
+                offset: 1
+            });
+            $('.animate-fade-in-up').viewportChecker({
+                classToAdd: 'visible animated fadeInUp',
+                classToRemove: 'hidden',
+                invertBottomOffset: false,
+                offset: 1
+            });
+            $('.animate-fade-in').viewportChecker({
+                classToAdd: 'visible animated fadeIn',
+                classToRemove: 'hidden',
+                invertBottomOffset: false,
+                offset: 1
+            });
+            $('.animate-bounce-in-right').viewportChecker({
+                classToAdd: 'visible animated bounceInRight',
+                classToRemove: 'hidden',
+                invertBottomOffset: false,
+                offset: 1
+            });
+            $('.animate-jello').viewportChecker({
+                classToAdd: 'animated jello',
+                invertBottomOffset: false,
+                offset: 1
+            });
+
+
+            AjaxFormContactNous();
+
+
+        });
+
+    </script>
+
+{% endblock javascripts %}

@@ -1,0 +1,126 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block title %} Modifier véhicule {% endblock title %}
+
+
+{% block fos_user_content %}
+    <div class="container">
+        {{ include('@FOSUser/Profile/nav_pills_profile.html.twig') }}
+        <div class="tab-content thumbnail">
+            <!-- Tab pane Profile -->
+            <div id="Profil" class="tab-pane fade in active">
+                <div class="page-header">
+                    <h2 class="violet-red">Profil</h2>
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="{{ path('fos_user_profile_edit') }}">Informations personnelles</a>
+                            </li>
+                            <li><a href="{{ path('photo_edit') }}">Photo</a></li>
+                            <li class="active"><a href="{{ path('cars-show') }}">Véhicule</a></li>
+                            <li><a href="{{ path('fos_user_change_password') }}">Mot de passe</a></li>
+                            <li><a href="#">Fermeture de compte</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-8">
+
+                        <div class="tab-content thumbnail">
+                            <div id="vehicule" class="tab-pane fade in active">
+                                <div class="page-header">
+                                    <h2 class="violet-red">Modifier Véhicule</h2>
+                                </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-md-offset-3">
+
+                                            {% for label, flashes in app.session.flashbag.all %}
+                                                {% for flash in flashes %}
+                                                    <div class="alert alert-{{ label }}">
+                                                        {{ flash }}
+                                                    </div>
+                                                {% endfor %}
+                                            {% endfor %}
+
+                                            {{ form_start(form, {'method': 'post', 'action': path('car_edit',{'id':id}), 'attr': {'class':''}} ) }}
+
+                                            <div class="form-group">
+                                                {{ form_label(form.marque) }}
+                                                {% set models_url = path('car-models', {'brand':'__MARQUE__'}) %}
+                                                {{ form_widget(form.marque,{'attr':{'data-car-models-url': models_url  }} ) }}
+                                                {{ form_errors(form.marque) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_label(form.modele) }}
+                                                {{ form_widget(form.modele) }}
+                                                {{ form_errors(form.modele) }}
+                                                <img src="{{asset("img/progress-circle.gif")}}" alt="loading" class="ajax-progress">
+                                            </div>
+
+                                            <div class="form-group">
+                                                {{ form_label(form.confort) }}
+                                                {{ form_widget(form.confort) }}
+                                                {{ form_errors(form.confort) }}
+                                            </div>
+
+                                            <div class="form-group">
+                                                {{ form_label(form.nbrPlaces) }}
+                                                {{ form_widget(form.nbrPlaces) }}
+                                                <small>(incluant le conducteur)</small>
+                                                {{ form_errors(form.nbrPlaces) }}
+                                            </div>
+
+                                            <div class="form-group">
+                                                {{ form_label(form.couleur) }}
+                                                {{ form_widget(form.couleur) }}
+                                                {{ form_errors(form.couleur) }}
+                                            </div>
+
+                                            <div class="form-group">
+                                                {{ form_label(form.immatriculation) }}
+                                                {{ form_widget(form.immatriculation) }}
+                                                {{ form_errors(form.immatriculation) }}
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary btn-bg">Modifier</button>
+                                            </div>
+
+                                            {{ form_end(form) }}
+
+
+                                        </div>
+                                    </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div><!-- end Tab pane Profile -->
+        </div>
+    </div>
+
+{% endblock fos_user_content %}
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script language="JavaScript" src="{{ asset("js/car.js") }}"></script>
+
+{% endblock javascripts %}
+
+
+
+
+

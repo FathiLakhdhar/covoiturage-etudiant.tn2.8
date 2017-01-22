@@ -1,0 +1,242 @@
+{% extends ':Trajet:layout.html.twig' %}
+
+
+{% block title %} Rechercher {% endblock title %}
+
+{% block body %}
+
+
+
+    <div class="bg-search">
+    </div>
+    <div class="container-fluid">
+
+
+
+        <div class="row col-lg-12 text-center section-padding-top-bottom-80">
+            <h2 class="uppercase">Simplifier vos trajets </h2>
+        </div>
+
+
+        <section class="row">
+            <div class="col-lg-2">
+                <form class="">
+                    <h4 class="darkgrey uppercase">Filtrer par :</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>
+                                <input id="REGULAR" type="radio" name="fr_t" class="iCheck"/>
+                                Trajets réguliers
+                            </label>
+                        </div>
+                        <div class="col-md-12">
+                            <label>
+                                <input id="UNIQUE" type="radio" name="fr_t" class="iCheck"/>
+                                Trajets uniques
+                            </label>
+                        </div>
+                        <div class="col-md-12">
+                            <select>
+                                <option>Par prix</option>
+                                <option>Par heure</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6 ">
+                {% for label, flashes in app.session.flashbag.all %}
+                    {% for flash in flashes %}
+                        <div class="alert alert-{{ label }}">
+                            {{ flash }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
+                <section class="">
+
+                    <h4 class="darkgrey uppercase ">chercher un trajet</h4>
+
+                    <form id="search_form" action="{{ path('trajet_search') }}" method="post" class="">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4  col-sm-4 col-xs-12">
+                                <div class="form-group pos-relative">
+                                    <span class="glyphicon glyphicon-map-marker green input-icon"></span>
+                                    <label class="sr-only" for="search_origine">Origine</label>
+                                    <input type="text" id="search_origine" name="search_origine"
+                                           class="form-control text-indent" placeholder="Origine"
+                                           inputautocomplete="on" value="{{ search.origine }}"/>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group pos-relative">
+                                    <span class="glyphicon glyphicon-map-marker red input-icon"></span>
+                                    <label class="sr-only" for="search_destination">Arrivée</label>
+                                    <input type="text" id="search_destination" name="search_destination"
+                                           class="form-control text-indent" placeholder="Destination"
+                                           inputautocomplete="on" value="{{ search.destination }}"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                <div class="form-group pos-relative">
+                                    <label class="sr-only" for="search_date">date</label>
+                                    <span class="glyphicon glyphicon-calendar darkgrey input-icon"></span>
+                                    <input type="date" id="search_date" name="search_date"
+                                           class="form-control text-indent" datepicker=""
+                                           placeholder="" value="{{ search.date }}">
+                                </div>
+
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12  col-xs-12 text-center">
+                                <div class="form-group">
+                                    <button type="submit" class="btn red-btn btn-lg">
+                                        <i class="glyphicon glyphicon-search"></i> Rechercher
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </section>
+
+
+
+                <div class="">
+
+                    <h4 class="page-header steelblue darkgrey uppercase">Résultats</h4>
+                    <div class="text-center">
+                        <p class=""><span class="">{{ trajets|length }}</span> TRAJETS TROUVÉS</p>
+                    </div>
+
+                        {% for trajet in trajets %}
+                            <div class="panel panel-success">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        {{ trajet.origine.lieu }}
+                                        {% if trajet.roundTrip %}
+                                            <i class="ion ion-arrow-swap"></i>
+                                        {% else %}
+                                            <i class="ion ion-arrow-right-c"></i>
+                                        {% endif %}
+                                        {{ trajet.destination.lieu }}
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p>
+                                                Publier : {{ trajet.proposerAt|date("Y-m-d", false) }}
+                                            </p>
+                                            <p>
+                                                {{ trajet.nbPlacesRestants }} place(s) disponible(s).
+                                            </p>
+                                            <p>
+                                                {{ trajet.totalPrix }} TND par passager
+                                            </p>
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <a href="{{ path('trajet_show',{'id':trajet.id}) }}"
+                                               class="btn btn-green"><strong><i class="ion ion-edit"></i> + détails</strong></a>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                        {% else %}
+                            <div class="alert" style="border: 1px solid #03a9f4;">
+                                <p>Pour le moment, il n'y a pas de trajet déposé à cette date.
+                                    Vous pouvez déposer un trajet ou créer une alerte dès maintenant.</p>
+                            </div>
+
+                        {% endfor %}
+
+
+
+                </div>
+
+            </div>
+            <div class="col-md-3 ">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="panel">
+                            <!-- Default panel contents -->
+                            <h4 class="panel-heading uppercase" style="margin-top: 0px;background-color: #607D8B !important;color: white;"><i class="ion ion-ios-alarm-outline"></i> Créer une alerte</h4>
+                            <div class="panel-body">
+                                {% if form %}
+                                    {{ include(':Trajet/Gerer:alert.html.twig') }}
+                                {% else %}
+                                        <p class="list-group-item"><span class="badge">1</span> Recherche ton trajet</p>
+                                        <p class="list-group-item"><span class="badge">2</span> Ajoute une alerte</p>
+
+                                {% endif  %}
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+
+                        <div class="panel">
+                            <!-- Default panel contents -->
+                            <h4 class="panel-heading uppercase" style="margin-top: 0px;background-color: #fa4e5f !important;color: white;"><i class="ion ion-map"></i> Proposez un trajet</h4>
+                            <div class="panel-body">
+                                <p>Pour un trajet unique ou régulier pensez à covoiturer. Créez une annonce gratuite
+                                    pour partager les frais de votre voyage ! </p>
+                                <a href="{{ path('trajet_proposer_unique') }}" class="darkviolet">Créer votre annonce dès
+                                    maintenant !</a>
+                            </div>
+
+
+                        </div>
+                        {#
+                        <h3>Proposez un trajet</h3>
+                        <p>Pour un trajet unique ou régulier pensez à covoiturer. Créez une annonce gratuite
+                            pour partager les frais de votre voyage ! </p>
+                        <a href="{{ path('trajet_proposer_unique') }}" class="darkviolet">Créer votre annonce dès
+                            maintenant !</a>
+                            #}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+
+{% endblock body %}
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(function () {
+            $('.menu-links a').removeClass('active');
+            $('#idRechercher').addClass('active');
+        });
+    </script>
+
+
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBk9B9hwksRr8Sr0LGF-uj0GtDZlKCw1r4&libraries=places">
+    </script>
+    <script src="{{ asset('js/autoComplete.js') }}"></script>
+
+
+
+{% endblock %}

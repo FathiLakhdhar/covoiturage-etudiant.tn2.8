@@ -1,0 +1,32 @@
+{% extends 'FOSMessageBundle::layout.html.twig' %}
+
+{% block fos_message_content %}
+
+<h2 class="page-header violet-red">{% trans from 'FOSMessageBundle' %}send_new{% endtrans %}</h2>
+<div class="row">
+    <div class="col-md-6">
+    {{ form_start(form,{'method': 'post', 'action': path('fos_message_thread_new'), 'attr': {'class':''}}) }}
+
+    <div class="form-group">
+        {{ form_widget(form.subject,{'attr':{'class':'form-control','placeholder':"Subject"}}) }}
+        {{ form_errors(form.subject) }}
+    </div>
+
+    <div class="form-group">
+        {% set url %}{{ path('api_search_username') }}{% endset %}
+        {{ form_widget(form.recipients,{'attr':{'class':'form-control autocompleteContacts','placeholder':"À :",'data-url':url}}) }}
+        {{ form_errors(form.recipients) }}
+    </div>
+    <div class="form-group">
+        {{ form_widget(form.body,{'attr':{'class':'form-control','placeholder':"Votre message..."}}) }}
+        {{ form_errors(form.body) }}
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-green pull-right" value="Envoyer"/>
+    </div>
+    {{ form_end(form) }}
+
+    </div>
+</div>
+{% endblock %}
+

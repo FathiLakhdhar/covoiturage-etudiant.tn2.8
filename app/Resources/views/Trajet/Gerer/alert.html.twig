@@ -1,0 +1,37 @@
+{{ form_start(form,{'method': 'post', 'action': path('trajet_create_alert'), 'attr': {'class':''}}) }}
+
+<div class="text-center">
+
+<div class=" form-group box-highlight">
+    <label>
+    {{ form_widget(form.freqeunce[0],{'attr':{'class':'iCheck'}}) }}
+        pour un trajet régulier
+    </label>
+</div>
+<div class="Alert-or">
+    <div class="Alert-orBar"></div>
+    <div class="Alert-orText">ou</div>
+</div>
+<div class=" form-group box-highlight">
+    <label>
+        {{ form_widget(form.freqeunce[1],{'attr':{'class':'iCheck'}}) }}
+        pour un trajet unique le
+    </label>
+</div>
+
+<div class="form-group has-feedback">
+    {{ form_widget(form.date) }}
+    <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+</div>
+
+<div class="form-group">
+    <p>Recevez les nouvelles annonces par email</p>
+    {{ form_widget(form.email) }}
+</div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-block btn-green">Créer mon alerte trajet</button>
+    </div>
+
+</div>
+{{ form_end(form) }}

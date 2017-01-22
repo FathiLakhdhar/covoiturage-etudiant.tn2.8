@@ -1,0 +1,130 @@
+<ul class="list-unstyled list-inline">
+    <!-- Messages:-->
+    <li class="dropdown menu-message">
+        <a class="dropdown-toggle" data-toggle="dropdown" id="envelope_click">
+            <i class="fa fa-envelope-o"></i>
+            {% set thread_nb_unread = fos_message_nb_unread() %}
+
+            <span class="label label-danger nb_msg_unread" id="nb_msg_unread"
+                  data-thread-nb-unread="{{ thread_nb_unread }}">{{ thread_nb_unread }}</span>
+        </a>
+
+
+        {# Menu Message #}
+        <ul class="dropdown-menu triangle-up">
+            <li class="header message_nb_unread" data-messages-nb-unread="{{ path('api_nb_unread_messages') }}">You have
+                <span class="nb_msg_unread">{{ thread_nb_unread }}</span> messages
+            </li>
+            <li>
+                <!-- Ajax Load img.Gif -->
+                <div id="msg_load" class="text-center" style="display: none; position: relative">
+                    <img id="img-loader" class="loading" src="{{ asset('img/Preloader.gif') }}" alt="Loading"/>
+                </div>
+            </li>
+            <li>
+                {#-- inner menu: contains the actual data --#}
+
+                <ul class="menu" id="menu_messages" data-url-msg="{{ path('api_threads_user') }}">
+
+
+                </ul>
+            </li>
+            <li class="footer"><a href="{{ path('fos_message_inbox') }}">See All Messages</a></li>
+        </ul>
+
+    </li><!-- Fin Messages:-->
+
+    <li class="dropdown menu-Notification">{# Notification #}
+        <a href="" class="dropdown-toggle" data-toggle="dropdown" id="notif_click">
+            <i class="fa fa-bell-o"></i>
+
+            {% set notif_nb_unread = wanasni_notification_nb_unread() %}
+
+            <span id="nb_notif_unread" class="label label-danger nb_notif_unread"
+                  data-notif-nb-unread="{{ notif_nb_unread }}">{{ notif_nb_unread }}</span>
+        </a>
+
+        {# Menu Notification #}
+        <ul class="dropdown-menu triangle-up">
+            <li class="header notifications_nb_unread"
+                data-notifications-nb-unread-url="{{ path('api_nb_unread_notifications') }}">You have <span
+                        class="nb_notif_unread">{{ notif_nb_unread }}</span> Notifications
+            </li>
+            <li>
+                <!-- Ajax Load img.Gif -->
+                <div id="notif_load" class="text-center" style="display: none; position: relative">
+                    <img id="img-loader" class="loading" src="{{ asset('img/Preloader.gif') }}" alt="Loading"/>
+                </div>
+            </li>
+
+            <li><!-- Body -->
+
+                <ul class="menu" id="menu_notifications" data-url-notif="{{ path('api_user_notif_all') }}">
+                    <!-- Data notif -->
+
+                </ul>
+
+            </li>
+
+            <li class="footer" id="notification-url" data-notification-url="{{ path('vos_notifications') }}"><a href="{{ path('vos_notifications') }}">See All Notifications</a></li>
+
+
+        </ul>
+
+
+    </li>{# fin Notification #}
+    <li class="dropdown menu-user">
+        <div class="client">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                <img id="client-img" src="{{ asset(app.user.photo.webPath) }}"/>
+                <span>
+                    {{ (app.user.firstname ~' '~ app.user.lastname)|slice(0,20) }}
+                </span>
+            </a>
+
+            <ul class="dropdown-menu triangle-up">
+                <li>
+                    <div class="header-cover text-center">
+                        <img id="client-cover-img" src="{{ asset(app.user.photo.webPath) }}"/>
+                        <p> {{ app.user.email }} </p>
+                    </div>
+                </li>
+
+                <li>
+                    <ul class="menu">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li>
+                                <a href="{{ path('admin_index') }}"><i class="fa fa-user"></i>
+                                    <strong>A</strong>dmin</a>
+                            </li>
+                        {% endif %}
+
+                        <li>
+                            <a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user"></i> Profil</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('mes-alertes') }}"><i class="fa fa-bullhorn"></i> Alertes</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('avis_laisser') }}">
+                                <i class="fa fa-star"></i> Avis
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('mes-trajets') }}"><i class="fa fa-car"></i> Covoiturage</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out"></i> Deconnexion</a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+    </li>
+    <li></li>
+
+</ul>

@@ -1,0 +1,88 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+
+{% block fos_user_content %}
+    <div class="container">
+        {{ include('@FOSUser/Profile/nav_pills_profile.html.twig') }}
+        <div class="tab-content thumbnail">
+            <!-- Tab pane Profile -->
+            <div id="Profil" class="tab-pane fade in active">
+                <div class="page-header">
+                    <h2 class="violet-red">Profil</h2>
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="{{ path('fos_user_profile_edit') }}">Informations personnelles</a>
+                            </li>
+                            <li class="active"><a href="{{ path('photo_edit') }}">Photo</a></li>
+                            <li><a href="{{ path('cars-show') }}">Véhicule</a></li>
+                            <li><a href="{{ path('fos_user_change_password') }}">Mot de passe</a></li>
+                            <li><a href="#">Fermeture de compte</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-8">
+
+                        <div class="tab-content thumbnail">
+                            <div id="photo" class="tab-pane fade in active">
+                                <div class="page-header">
+                                    <h2 class="violet-red">photo</h2>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="text-center">
+                                            <div class="update-photo text-center">
+                                                <img class="p_img_ph" src="{{ asset(app.user.photo.webPath) }}">
+                                            </div>
+                                            <p>Ajoutez une photo</p>
+                                            {{ form_start(form,{'action': path('photo_edit')}) }}
+                                            <div class="form-group">
+                                                {{ form_widget(form.file,{'attr':{'style':'margin: auto;'}}) }}
+                                                {{ form_errors(form.file) }}
+                                            </div>
+                                            <div class="form-group">
+                                            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Enregistre
+                                            </button>
+                                                </div>
+                                            {{ form_end(form) }}
+
+
+                                            <p>
+                                                <small>2Mo maximum, PNG ou JPG.</small>
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="list-group">
+                                            <li class="list-group-item list-group-item-success"><i
+                                                        class="fa fa-check"></i>
+                                                Comment choisir la bonne photo
+                                            </li>
+                                            <li class="list-group-item">Pas de lunettes de soleil</li>
+                                            <li class="list-group-item">Face à l'objectif</li>
+                                            <li class="list-group-item">Un seul visage</li>
+                                            <li class="list-group-item">Claire et lumineuse</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div><!-- end Tab pane Profile -->
+        </div>
+    </div>
+
+{% endblock fos_user_content %}

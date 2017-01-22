@@ -1,0 +1,41 @@
+{% extends ':Admin:layout.html.twig' %}
+
+{% block title %}
+    Admin-avisreceived
+{% endblock title %}
+
+
+        {% block admin_contenu %}
+
+
+            <h3>{{ user.username }} ( {{ user.fullName }} )</h3>
+
+
+            <table class="table-data table table-bordered   table-striped table-hover">
+                <thead>
+                <tr class="success">
+                    <td>user</td>
+                    <td>Role</td>
+                    <td>Avis Global</td>
+                    <td>Avis Driving</td>
+                    <td>commentaire</td>
+                    <td>date</td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for avis in list_avis %}
+                    <tr>
+                        <td>{{ avis.emetteur }}</td>
+                        <td>{{ avis.role }}</td>
+                        <td>{{ avis.global }}</td>
+                        <td>{{ avis.driving }}</td>
+                        <td>{{ avis.comment }}</td>
+                        <td>{{ avis.createAt|date('d-m-Y H:i') }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+
+        {% endblock admin_contenu %}

@@ -1,0 +1,156 @@
+{% extends '@FOSUser/layout.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}Se connecter{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css"  href="{{ asset('css/style_Security.css') }}"/>
+{% endblock stylesheets %}
+
+{% block fos_user_content %}
+
+
+{% if error %}
+    <div class="alert alert-warning"> {{ error }} </div>
+{% endif %}
+
+{# Form #}
+
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+
+        <div class="form-box">
+            <div class="form-top">
+                <div class="form-top-left">
+                    <h3>Connexion</h3>
+                    <p>Enter username and password to log on:</p>
+                </div>
+                <div class="form-top-right">
+                    <i class="fa fa-lock"></i>
+                </div>
+            </div>
+            <div class="form-bottom">
+                <form action="{{ path("fos_user_security_check") }}" method="post" role="form" class="login-form">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+                    <div class="form-group">
+                        <label for="username" class="sr-only">{{ 'security.login.username'|trans }}</label>
+                        <input data-ajax-check-email="{{path('api_check_email', {'email':'__EMAIL__'})}}" type="text" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="Username..." class="form-username form-control"/>
+                        <img src="{{asset("img/progress-circle.gif")}}" alt="loading" class="ajax-progress">
+                        <p  class="red"  style="font-size:14px" id="erroremail"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="sr-only">{{ 'security.login.password'|trans }}</label>
+                        <input type="password" id="password" name="_password" required="required" placeholder="Password..." class="form-password form-control"/>
+                        <i id="viewpwd" class="viewpwd ion-eye"></i>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                        <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                    </div>
+
+
+
+                    <button   type="submit" class="btn green-btn btn-block btn-lg disabled" id="_submit" name="_submit">{{ 'security.login.submit'|trans }}</button>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="social-login text-center">
+            <h3>-- Ou --</h3>
+            <div class="social-login-buttons">
+                <a class="btn btn-link-2" href="#">
+                    <i class="fa fa-facebook"></i> Facebook
+                </a>
+                <a class="btn btn-link-2" href="#">
+                    <i class="fa fa-twitter"></i> Twitter
+                </a>
+                <a class="btn btn-link-2" href="#">
+                    <i class="fa fa-google-plus"></i> Google Plus
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{#===================================================#}
+
+
+
+{% endblock fos_user_content %}
+
+{% block footer %}
+    <footer>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="footer-border"></div>
+                    <p><a href="{{ path('homepage') }}"><strong>{{ site }}</strong></a>
+                        having a lot of fun. <i class="fa fa-smile-o"></i></p>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+{% endblock footer %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script>
+        $('input#username').blur(function(){
+            email=$(this).val();
+            if(isEmail(email)){
+               var elem= $(this);
+               elem.siblings("img.ajax-progress").css("display","block");
+                url=elem.data('ajaxCheckEmail').replace("__EMAIL__", email);
+                $.get(url, function(data){
+                    //alert(JSON.stringify(data));
+                    if(data.success){
+                        $('button#_submit').removeClass("disabled");
+                        elem.addClass("valid");
+                        elem.removeClass("invalid");
+                        $('p#erroremail').text("");
+                    }else{
+                        $('button#_submit').addClass("disabled");
+                        elem.addClass("invalid");
+                        elem.removeClass("valid");
+                        $('p#erroremail').text(data.errors[0].error);
+                    }
+                }).done(function(){
+                    elem.siblings("img.ajax-progress").css("display","none");
+                    
+                });
+            }else{
+                elem.addClass("invalid");
+                elem.removeClass("valid");
+                $('p#erroremail').text("error format email (exemple@domaine.fr)");
+            }
+        });
+
+        function isEmail(myVar){
+            // La 1ère étape consiste à définir l'expression régulière d'une adresse email
+            var regEmail = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$','i');
+            return regEmail.test(myVar);
+        }
+
+        $("i.viewpwd").click(function(){
+            if($(this).hasClass("ion-eye-disabled")){
+                $(this).removeClass("ion-eye-disabled");
+                $(this).addClass("ion-eye");
+                $(this).siblings("input").attr("type","password");
+            }else{
+                $(this).removeClass("ion-eye");
+                $(this).addClass("ion-eye-disabled");
+                $(this).siblings("input").attr("type","text");
+            }
+        });
+
+    </script>
+{% endblock %}

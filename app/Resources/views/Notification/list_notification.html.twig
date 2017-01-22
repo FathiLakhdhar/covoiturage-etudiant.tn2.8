@@ -1,0 +1,73 @@
+{% extends ':Notification:notification.html.twig' %}
+
+
+
+{% block notification_contenu %}
+
+    {% for notification in notifications %}
+
+
+
+        {% if notification.type=="demande" %}
+            {% set notif_par = notification.reservation.passager %}
+        {% else %}
+            {% set notif_par = notification.reservation.trajet.conducteur %}
+        {% endif %}
+
+
+
+
+
+        <div class="media" id="notif_{{ notification.id }}"
+             {% if notification.lu == false %}style="background-color: aliceblue;" {% endif %}>
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object" alt="" style="width: 64px; height: 64px;"
+                         src="{{ asset(notif_par.photo.webPath) }}" data-holder-rendered="true">
+                </a>
+            </div>
+            <div class="media-body pos-relative">
+                <h3 class="media-heading "><a class="tooltip_profil" title="" data-placement="top"
+                                              data-tooltip-profil-url="{{ path('api_tooltip_profile',{'id':notif_par.id}) }}">{{ notif_par.username }}</a>
+                </h3>
+                <p>
+                    {{ notification.contenu }}
+                    <a href="{{ path('trajet_show',{'id':notification.reservation.trajet.id}) }}" data-toggle="tooltip"
+                       data-placement="left" title="voir trajet">
+                        <i class="glyphicon glyphicon-road "></i>
+                    </a>
+                </p>
+
+                <small class="pull-right"
+                       style="position: absolute;top: 0px;right: 0px;color: #999;">{{ notification.notifAt|date('F jS \\a\\t g:ia') }}</small>
+
+                <div class="notifications-icon">
+
+                    {% if notification.type=="demande" %}
+                        {% if notification.reservation.etat == false %}
+                            <a href="{{ path('reservation_accept',{'id':notification.id}) }}" class=" accepte"><i
+                                        class="ion ion-checkmark-circled "></i></a>
+                        {% endif %}
+                        <a href="{{ path('reservation_refuse',{'id':notification.id}) }}" class="refuse"
+                           style="right: 57px;"><i class="ion ion-close-circled"></i></a>
+                    {% endif %}
+
+
+                    {% if notification.lu == false %}
+                        <a href="{{ path('read_notification',{'id':notification.id}) }}" data-toggle="tooltip" title="marquer comme lu" class="notif_marquer_lu"><i
+                                    class="ion ion-ios-circle-filled"></i></a>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+
+
+    {% else %}
+        <div class="alert alert-info">
+            <p> pas des notifications </p>
+        </div>
+    {% endfor %}
+
+{% endblock notification_contenu %}

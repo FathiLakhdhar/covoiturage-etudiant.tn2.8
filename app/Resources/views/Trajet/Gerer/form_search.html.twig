@@ -1,0 +1,36 @@
+<form id="search_form" action="{{ path('trajet_search') }}" method="post" class="">
+    <div class="row">
+        <div class="col-lg-2 col-lg-offset-3 col-md-4  col-sm-4 col-xs-12">
+            <div class="form-group pos-relative">
+                <span class="glyphicon glyphicon-map-marker green input-icon"></span>
+                <label class="sr-only" for="search_origine">Origine</label>
+                <input type="text" id="search_origine" name="search_origine" class="form-control input-lg text-indent" placeholder="Origine" inputautocomplete="on"/>
+            </div>
+        </div>
+
+
+        <div class="col-lg-2 col-md-4 col-sm-4 col-xs-12">
+            <div class="form-group pos-relative">
+                <span class="glyphicon glyphicon-map-marker red input-icon"></span>
+                <label class="sr-only" for="search_destination">Arrivée</label>
+                <input type="text" id="search_destination" name="search_destination" class="form-control input-lg text-indent"  placeholder="Destination" inputautocomplete="on"/>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-2 col-xs-12">
+            <div class="form-group pos-relative">
+                <label class="sr-only" for="search_date">date</label>
+                <span class="glyphicon glyphicon-calendar darkgrey input-icon"></span>
+                <input type="text" id="search_date" name="search_date" class="form-control input-lg text-indent" datepicker="" placeholder="aaaa-mm-jj">
+            </div>
+
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12  col-xs-12 text-center">
+            <div class="form-group">
+                <button type="submit" class="btn btn-green btn-lg">
+                    <i class="glyphicon glyphicon-search"></i> Rechercher
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
