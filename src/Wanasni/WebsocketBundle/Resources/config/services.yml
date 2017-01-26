@@ -1,0 +1,7 @@
+services:
+    acme_hello.topic_sample_service:
+        class: Wanasni\WebsocketBundle\Topic\AcmeTopic
+        autowire: true
+        arguments: [@service_container, @doctrine.orm.entity_manager, @gos_web_socket.websocket.client_manipulator]
+        tags:
+            - { name: gos_web_socket.topic }

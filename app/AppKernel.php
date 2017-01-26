@@ -14,10 +14,16 @@ class AppKernel extends Kernel
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\MessageBundle\FOSMessageBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+            new Gos\Bundle\WebSocketBundle\GosWebSocketBundle(),
+            new Gos\Bundle\PubSubRouterBundle\GosPubSubRouterBundle(),
+            new Snc\RedisBundle\SncRedisBundle(),
+
             new Wanasni\UserBundle\WanasniUserBundle(),
             new Wanasni\TrajetBundle\WanasniTrajetBundle(),
             new Wanasni\VehiculeBundle\WanasniVehiculeBundle(),
@@ -27,9 +33,7 @@ class AppKernel extends Kernel
             new Wanasni\PhotoBundle\WanasniPhotoBundle(),
             new Wanasni\AdminBundle\WanasniAdminBundle(),
             new Wanasni\AvisBundle\WanasniAvisBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle(),
-            new Gos\Bundle\WebSocketBundle\GosWebSocketBundle(),
-            new Gos\Bundle\PubSubRouterBundle\GosPubSubRouterBundle(),
+            new Wanasni\WebsocketBundle\WanasniWebsocketBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

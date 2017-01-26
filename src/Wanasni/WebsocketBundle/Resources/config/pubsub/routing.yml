@@ -1,0 +1,16 @@
+acme_topic:
+    channel: ws/acme/channel
+    handler:
+        callback: 'acme.topic' #related to the getName() of your topic
+
+
+
+acme_topic_chat:
+    channel: ws/acme/chat/{room}/{user_id}
+    handler:
+        callback: 'acme.topic' #related to the getName() of your topic
+    requirements:
+        room:
+            pattern: "[a-z]+" #accept all valid regex, don't put delimiters !
+        user_id:
+            pattern: "\d+"
